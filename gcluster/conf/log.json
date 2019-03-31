@@ -1,0 +1,27 @@
+{
+  "pcluster.log": {
+    "log.logger": {
+      "engine": {
+        "Level": "trace",
+        "Output": {
+          "console": {}
+        },
+        "TextFormatter" : {
+          "FullTimestamp": true
+        }
+      },
+      "app": {
+        "Level": "trace",
+        "Output": {
+          "console": {},
+          "file": {
+            "name": "app.log"
+          }
+        },
+        "TextFormatter" : {
+          "FullTimestamp": true
+        }
+      }
+    }
+  }
+}

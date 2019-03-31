@@ -1,0 +1,10 @@
+
+{
+  "app.group": "gcluster.demo",
+  "cfg.files": [
+    "gcluster/conf/log.json"
+  ],
+  "demo.http": {
+    "http.host": "127.0.0.1:8080"
+  }
+}
