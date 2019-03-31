@@ -8,12 +8,14 @@ import (
 
 type serviceLevelDBOptDemo struct {
 	gioc.IBeanCondition
-	leveldb gleveldb.ILevelDBDriver `bean`
+	// 通过bean标签自动注入leveldb驱动
+	leveldb gleveldb.ILevelDBDriver `bean:""`
 }
 
 func NewServiceLevelDBOptDemo() *serviceLevelDBOptDemo {
 	return &serviceLevelDBOptDemo{
-		IBeanCondition: gioc.NewConditionOnBean(gleveldb.ILevelDBDriverType, true),
+		// 依赖配置，只有配置了gleveldb.ILevelDBDriverType之后，这个bean才会生效
+		IBeanCondition: gioc.NewConditionOnBeanType(gleveldb.ILevelDBDriverType, true),
 	}
 }
 

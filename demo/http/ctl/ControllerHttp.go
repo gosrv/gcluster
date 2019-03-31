@@ -10,12 +10,13 @@ import (
 逻辑消息控制器
 */
 type controllerHttp struct {
-	// 控制器标记
+	// 控制器标记，必须集成这个接口才会被http模块判定为控制器
 	ghttp.IHttpController
 }
 
 func NewControllerHttp() *controllerHttp {
 	return &controllerHttp{
+		// 起始路径，所有本控制器的路径都会在以起始路径开始
 		IHttpController: ghttp.NewHttpRestController("/demo"),
 	}
 }

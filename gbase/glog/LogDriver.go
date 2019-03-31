@@ -13,23 +13,16 @@ type LogConfig struct {
 }
 
 type LogDriver struct {
-	logConfigs       map[string]*LogConfig
-	loggers          map[string]*logrus.Logger
-	logOutputConfigs map[string]ILogOutput
-	lock             sync.Mutex
+	logConfigs map[string]*LogConfig
+	loggers    map[string]*logrus.Logger
+	lock       sync.Mutex
 }
 
 func NewLogDriver(logConfigs map[string]*LogConfig) *LogDriver {
 	driver := &LogDriver{
-		logConfigs:       logConfigs,
-		loggers:          make(map[string]*logrus.Logger),
-		logOutputConfigs: make(map[string]ILogOutput),
+		logConfigs: logConfigs,
+		loggers:    make(map[string]*logrus.Logger),
 	}
-
-	consolecfg := NewLogOutputConsole()
-	driver.logOutputConfigs[consolecfg.LogOutputName()] = consolecfg
-	filecfg := NewLogOutputFile()
-	driver.logOutputConfigs[filecfg.LogOutputName()] = filecfg
 
 	for name, cfg := range logConfigs {
 		logger := logrus.New()
@@ -46,7 +39,7 @@ func NewLogDriver(logConfigs map[string]*LogConfig) *LogDriver {
 			logger.SetLevel(lev)
 		}
 		for outputName, outputCfg := range cfg.Output {
-			logConfig, ok := driver.logOutputConfigs[outputName]
+			logConfig, ok := LogOutputConfigs[outputName]
 			if !ok {
 				Panic("no log output config [%v]", logConfig)
 			}

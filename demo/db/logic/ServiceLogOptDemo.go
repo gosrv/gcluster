@@ -5,7 +5,10 @@ import (
 )
 
 type serviceLogOptDemo struct {
-	logApp    *logrus.Logger `log:"app"`
+	// 日志属性配置文件设置
+	// app日志的自动注入
+	logApp *logrus.Logger `log:"app"`
+	// engine日志的自动注入
 	logEngine *logrus.Logger `log:"engine"`
 }
 

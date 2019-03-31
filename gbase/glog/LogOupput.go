@@ -68,3 +68,12 @@ func (this *LogOutputFile) ConfigLogOutput(writer *LogOutputWriter, cfg map[stri
 	}
 	writer.AddWriter(file)
 }
+
+var LogOutputConfigs = make(map[string]ILogOutput)
+
+func init() {
+	consolecfg := NewLogOutputConsole()
+	LogOutputConfigs[consolecfg.LogOutputName()] = consolecfg
+	filecfg := NewLogOutputFile()
+	LogOutputConfigs[filecfg.LogOutputName()] = filecfg
+}

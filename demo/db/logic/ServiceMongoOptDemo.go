@@ -14,7 +14,8 @@ type serviceMongoOptDemo struct {
 
 func NewServiceMongoOptDemo() *serviceMongoOptDemo {
 	return &serviceMongoOptDemo{
-		IBeanCondition: gioc.NewConditionOnBean(gmongo.IMongoDBDriverType, true),
+		// 依赖配置，只有配置了gleveldb.IMongoDBDriverType之后，这个bean才会生效
+		IBeanCondition: gioc.NewConditionOnBeanType(gmongo.IMongoDBDriverType, true),
 	}
 }
 

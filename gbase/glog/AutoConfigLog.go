@@ -9,7 +9,7 @@ type AutoConfigLog struct {
 	gioc.IBeanCondition
 	gioc.IConfigBase
 	tagProcessor *LogTagProcessor
-	logConfigs   map[string]*LogConfig `cfg.d:"log.logger"`
+	logConfigs   map[string]*LogConfig `cfg.d:""`
 	*LogDriver
 	domain string
 }
@@ -23,7 +23,9 @@ func NewAutoConfigLog(cfgBase, domain string) *AutoConfigLog {
 		domain:         domain,
 	}
 }
+func (this *AutoConfigLog) BeanBeforeTagProcess(tagProcessor gioc.ITagProcessor, beanContainer gioc.IBeanContainer) {
 
+}
 func (this *AutoConfigLog) BeanAfterTagProcess(tagProcessor gioc.ITagProcessor, beanContainer gioc.IBeanContainer) {
 	if tagProcessor.TagProcessorName() != gioc.ConfigTagProcessor {
 		return
