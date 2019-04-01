@@ -12,7 +12,7 @@ type IGLog interface {
 	Redirect(base, name string, loader gioc.IConfigLoader) error
 }
 
-var GLog IGLog = &logrusLog{}
+var GLog IGLog = &gLog{}
 
 func Panic(format string, v ...interface{}) {
 	GLog.Panic(format, v...)

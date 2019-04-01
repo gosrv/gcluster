@@ -6,12 +6,14 @@ import (
 	"github.com/gosrv/gcluster/gbase/gdb/gmongo"
 	"github.com/gosrv/gcluster/gbase/gdb/gredis"
 	"github.com/gosrv/gcluster/gbase/ghttp"
+	"github.com/gosrv/gcluster/gbase/glog"
 	"github.com/gosrv/gcluster/gbase/tcpnet"
 	"github.com/gosrv/gcluster/gcluster/baseapp/controller"
 	"github.com/gosrv/gcluster/gcluster/baseapp/entity"
 	"github.com/gosrv/gcluster/gcluster/baseapp/service"
 	"github.com/gosrv/gcluster/gcluster/common"
 	"github.com/gosrv/goioc"
+	"github.com/gosrv/goioc/util"
 )
 
 func initBaseNet(builder gioc.IBeanContainerBuilder) {
@@ -53,6 +55,10 @@ func initServices(builder gioc.IBeanContainerBuilder) {
 func main() {
 	application := app.NewApplication()
 	configLoader := application.InitCli()
+	// 重定向系统日志
+	err := glog.Redirect("pcluster.log", "engine", configLoader)
+	util.VerifyNoError(err)
+
 	builder := application.InitBuilder()
 	application.InitBaseBeanBuilder(builder, configLoader)
 
