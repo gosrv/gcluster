@@ -55,5 +55,8 @@ func (this *ControllerLogin) Login(ctx gnet.ISessionCtx, login *netproto.CS_Logi
 	code := this.serviceLogin.ProcessLogin(netChannel, ctx, loginCheck.Id)
 	// 登陆服授权成功，进入登陆处理
 	repLogin.Code = code.Enum()
+	if code == netproto.E_Code_E_OK {
+		repLogin.Id = &loginCheck.Id
+	}
 	return repLogin
 }
