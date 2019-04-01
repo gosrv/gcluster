@@ -22,32 +22,32 @@ func NewControllerHttpTemplate() *controllerHttpTemplate {
 	}
 }
 
-//	/demo/hello/raw
+//	/tmpl/hello/raw
 func (this *controllerHttpTemplate) HelloRaw(ctx gnet.ISessionCtx, writer http.ResponseWriter, request *http.Request) ghttp.ModAndView {
-	return *ghttp.NewModAndView("hello", "/demo/hello/raw")
+	return *ghttp.NewModAndView("hello", "/tmpl/hello/raw")
 }
 
-//  /demo/hello?Account=abc&Password=123
+//  /tmpl/hello?Account=abc&Password=123
 func (this *controllerHttpTemplate) Hello(ctx gnet.ISessionCtx, params *struct{ Account, Password string }) *ghttp.ModAndView {
 	return ghttp.NewModAndView("hello", params)
 }
 
-//	/demo/hello/param?p1=1&p2=2
+//	/tmpl/hello/param?p1=1&p2=2
 func (this *controllerHttpTemplate) HelloParam(ctx gnet.ISessionCtx, params *ghttp.HttpParam) *ghttp.ModAndView {
-	return ghttp.NewModAndView("hello", params)
+	return ghttp.NewModAndView("hello", params.ParamSingle)
 }
 
-//	/demo/hello/form
+//	/tmpl/hello/form
 func (this *controllerHttpTemplate) HelloForm(ctx gnet.ISessionCtx, form *ghttp.HttpForm) *ghttp.ModAndView {
 	return ghttp.NewModAndView("hello", form.ParamSingle)
 }
 
-//	/demo/hello/header
+//	/tmpl/hello/header
 func (this *controllerHttpTemplate) HelloHeader(ctx gnet.ISessionCtx, header *ghttp.HttpHeader) *ghttp.ModAndView {
-	return ghttp.NewModAndView("hello", header)
+	return ghttp.NewModAndView("hello", header.Headers)
 }
 
-//	/demo/hello/cookie
+//	/tmpl/hello/cookie
 func (this *controllerHttpTemplate) HelloCookie(ctx gnet.ISessionCtx, cookie *ghttp.HttpCookie) *ghttp.ModAndView {
-	return ghttp.NewModAndView("hello", cookie)
+	return ghttp.NewModAndView("hello", cookie.ParamSingle)
 }

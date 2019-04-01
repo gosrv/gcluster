@@ -70,10 +70,10 @@ func (this *textTemplateViewRender) obtainTemplate(view string) (*template.Templ
 	}
 	tmpFileName := this.prefix + view + this.suffix
 	fdata, err := ioutil.ReadFile(tmpFileName)
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
-	tmpl, err = template.New(this.name).ParseFiles(string(fdata))
+	tmpl, err = template.New(view).Parse(string(fdata))
 	if err != nil {
 		return nil, err
 	}
