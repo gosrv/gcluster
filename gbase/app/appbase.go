@@ -30,7 +30,7 @@ type IApplication interface {
 	IsShutdown() bool
 	// 触发事件
 	TriggerEvent(event string, data interface{})
-	// 设置事件处理函数，非线程安全，需要在bean初始化期间全部设置
+	// 设置事件处理函数，非线程安全，需要在bean初始化期间全部设置完成
 	ConnectEvent(event string, processor func(string, interface{}))
 }
 
