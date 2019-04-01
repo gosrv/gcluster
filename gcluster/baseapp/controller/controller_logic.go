@@ -3,6 +3,7 @@ package controller
 import (
 	"github.com/gosrv/gcluster/gbase/controller"
 	"github.com/gosrv/gcluster/gbase/gnet"
+	"github.com/gosrv/gcluster/gcluster/baseapp/entity"
 	"github.com/gosrv/gcluster/gcluster/baseapp/service"
 	"github.com/gosrv/gcluster/gcluster/proto"
 	"github.com/sirupsen/logrus"
@@ -27,7 +28,13 @@ func NewControllerLogic() *ControllerLogic {
 	}
 }
 
-// 心跳消息处理
+// 心跳消息处理，playerData和playerInfo是自动注入的，如果你不需要也可以不写，比如下面的写法
+func (this *ControllerLogic) Logic(ctx gnet.ISessionCtx, msg *netproto.CS_Tick,
+	playerData *entity.PlayerData, playerInfo *entity.PlayerInfo) *netproto.SC_Tick {
+	return &netproto.SC_Tick{}
+}
+/*
 func (this *ControllerLogic) Logic(ctx gnet.ISessionCtx, msg *netproto.CS_Tick) *netproto.SC_Tick {
 	return &netproto.SC_Tick{}
 }
+*/
