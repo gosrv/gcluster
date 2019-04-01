@@ -15,36 +15,50 @@ const (
 	Shtudown = "shutdown"
 )
 
+type appEvent struct {
+	name string
+	data interface{}
+}
+
+func NewAppEvent(event string, data interface{}) *appEvent {
+	return &appEvent{name: event, data: data}
+}
+
+// 应用程序
 type IApplication interface {
-	TriggerEvent(event string)
-	ConnectEvent(event string, processor func())
+	// 是否已关闭
+	IsShutdown() bool
+	// 触发事件
+	TriggerEvent(event string, data interface{})
+	// 设置事件处理函数，非线程安全，需要在bean初始化期间全部设置
+	ConnectEvent(event string, processor func(string, interface{}))
 }
 
 type Application struct {
 	shutdown   bool
-	eventChan  chan string
-	eventFuncs map[string]func()
+	eventChan  chan *appEvent
+	eventFuncs map[string][]func(string, interface{})
 }
 
-func (this *Application) TriggerEvent(event string) {
-	this.eventChan <- event
+func (this *Application) IsShutdown() bool {
+	return this.shutdown
 }
 
-func (this *Application) ConnectEvent(event string, processor func()) {
-	_, exist := this.eventFuncs[event]
-	if exist {
-		glog.Panic("duplicate event connect %v", event)
-	}
-	this.eventFuncs[event] = processor
+func (this *Application) TriggerEvent(event string, data interface{}) {
+	this.eventChan <- NewAppEvent(event, data)
+}
+
+func (this *Application) ConnectEvent(event string, processor func(string, interface{})) {
+	this.eventFuncs[event] = append(this.eventFuncs[event], processor)
 }
 
 func NewApplication() *Application {
 	app := &Application{
 		shutdown:   false,
-		eventChan:  make(chan string),
-		eventFuncs: make(map[string]func()),
+		eventChan:  make(chan *appEvent),
+		eventFuncs: make(map[string][]func(string, interface{})),
 	}
-	app.ConnectEvent(Shtudown, func() {
+	app.ConnectEvent(Shtudown, func(string, interface{}) {
 		app.shutdown = true
 	})
 	return app
@@ -129,11 +143,13 @@ func (this *Application) Build(builder gioc.IBeanContainerBuilder) gioc.IBeanCon
 func (this *Application) enterEventLoop() {
 	for !this.shutdown {
 		event := <-this.eventChan
-		processor, ok := this.eventFuncs[event]
+		processors, ok := this.eventFuncs[event.name]
 		if !ok {
 			continue
 		}
-		processor()
+		for _, pro := range processors {
+			pro(event.name, event.data)
+		}
 	}
 }
 
@@ -150,5 +166,5 @@ func (this *Application) Start(container gioc.IBeanContainer) {
 }
 
 func (this *Application) Shutdown() {
-	this.TriggerEvent(Shtudown)
+	this.TriggerEvent(Shtudown, nil)
 }

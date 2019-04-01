@@ -13,12 +13,12 @@ import (
 */
 func NewLogicMsgIds() gnet.ITypeID {
 	msgIds := gnet.NewTypeID()
-
+	// 添加增量更新消息
 	err := msgIds.AddIDType(1, reflect.TypeOf((*netproto.PlayerData)(nil)))
 	util.VerifyNoError(err)
 	err = msgIds.AddIDType(2, reflect.TypeOf((*netproto.PlayerInfo)(nil)))
 	util.VerifyNoError(err)
-
+	// 添加其它逻辑消息
 	for id, name := range netproto.EMsgIds_name {
 		err := msgIds.AddIDType(int(id), proto.MessageType("netproto."+name[1:]))
 		util.VerifyNoError(err)

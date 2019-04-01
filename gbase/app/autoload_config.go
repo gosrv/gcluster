@@ -14,10 +14,13 @@ type autoLoadConfig struct {
 	beanContainer gioc.IBeanContainer  `bean`
 	tagParser     gioc.ITagParser      `bean`
 	tagProcessors []gioc.ITagProcessor `bean`
+	stop          bool
 }
 
 func NewAutoLoadConfig() *autoLoadConfig {
-	return &autoLoadConfig{}
+	return &autoLoadConfig{
+		stop: false,
+	}
 }
 
 func (this *autoLoadConfig) BeanStart() {
@@ -31,7 +34,7 @@ func (this *autoLoadConfig) BeanStart() {
 	util.VerifyNotNull(configTagProcessor)
 
 	gutil.RecoverGo(func() {
-		for {
+		for !this.stop {
 			this.configLoader.AutoLoad(func() {
 				for _, bean := range this.beanContainer.GetAllBeans() {
 					gioc.TagProcessorHelper.BeanTagProcess(bean, this.tagParser, configTagProcessor)
@@ -42,5 +45,5 @@ func (this *autoLoadConfig) BeanStart() {
 }
 
 func (this *autoLoadConfig) BeanStop() {
-
+	this.stop = true
 }

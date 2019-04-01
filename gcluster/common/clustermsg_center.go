@@ -27,14 +27,23 @@ func (this *ClusterMsgCenter) getBundleMsgQueueName(bundleId int64) string {
 }
 
 func (this *ClusterMsgCenter) BlockProcessPlayerMsg(id int64, processor gproto.IMsgProcessor) {
-	playerQueueName := this.getPlayerMsgQueueName(id)
+	queue := this.getPlayerMsgQueueName(id)
+	this.blockProcessMsg(queue, processor)
+}
+
+func (this *ClusterMsgCenter) BlockProcessBundleMsg(id int64, processor gproto.IMsgProcessor) {
+	queue := this.getBundleMsgQueueName(id)
+	this.blockProcessMsg(queue, processor)
+}
+
+func (this *ClusterMsgCenter) blockProcessMsg(mqName string, processor gproto.IMsgProcessor) {
 	for {
-		vals, _ := this.msgListOpt.BLeftPop(time.Minute, playerQueueName)
+		vals, _ := this.msgListOpt.BLeftPop(time.Minute, mqName)
 		for _, val := range vals {
 			msg := this.decoder.Decode(val)
 			processed := processor.ProcessMsg(msg)
 			if !processed {
-				this.msgListOpt.LeftPush(playerQueueName, val)
+				this.msgListOpt.LeftPush(mqName, val)
 				return
 			}
 		}

@@ -7,7 +7,7 @@ require (
 	github.com/go-redis/redis v6.15.2+incompatible
 	github.com/golang/protobuf v1.2.0
 	github.com/gorilla/websocket v1.4.0
-	github.com/gosrv/goioc v0.0.0-20190401011608-3731999ef253
+	github.com/gosrv/goioc v0.0.0-20190401114416-bab4f917d233
 	github.com/micro/go-config v1.0.0
 	github.com/sirupsen/logrus v1.4.0
 	github.com/syndtr/goleveldb v1.0.0

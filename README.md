@@ -3,9 +3,6 @@ go game server
 
 # star it && QQ群：869428810
 
-# What is gcluster？
-A fast, scalable, distributed game server engine/framework for go
-
 # Features
 1. based on ioc
 2. easy to use/expand/config
@@ -14,11 +11,10 @@ A fast, scalable, distributed game server engine/framework for go
 5. all components are replaceable
 
 # Tutorial && Documents
-TODO
+/demo/http
+/demo/db
+/gcluster/loginapp
+/gcluster/baseapp
 
-# Client support
-TODO
 
-# Dependencies
-TODO
 

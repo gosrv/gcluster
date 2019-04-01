@@ -26,6 +26,7 @@ func (this *ServiceLogin) BeanInit() {
 	eventRoute.Connect(gnet.NetEventConnect, func(from interface{}, key interface{}, data interface{}) interface{} {
 		return nil
 	})
+	// 玩家断开连接时，要清理数据
 	eventRoute.Connect(gnet.NetEventDisconnect, func(from interface{}, key interface{}, data interface{}) interface{} {
 		ctx := from.(gnet.ISessionCtx)
 		playerIdIns := ctx.Get(entity.PlayerIdKey)

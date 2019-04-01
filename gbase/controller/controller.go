@@ -15,9 +15,11 @@ type IController interface {
 }
 
 type controller struct {
-	group   string
-	ctype   string
-	finder  IControlPointFinder
+	group string
+	ctype string
+	// 控制函数查找
+	finder IControlPointFinder
+	// 控制函数触发
 	trigger IControlPointTrigger
 }
 
@@ -41,7 +43,7 @@ func NewController(group string, finder IControlPointFinder, trigger IControlPoi
 	return &controller{group: group, finder: finder, trigger: trigger}
 }
 
-// 类型路由器
+// 类型控制器
 func NewTypeController(group string) *controller {
 	return &controller{
 		group:   group,

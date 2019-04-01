@@ -17,6 +17,7 @@ func NewServiceDataAutoSync() *serviceDataAutoSync {
 
 func (this *serviceDataAutoSync) BeanInit() {
 	eventRoute := this.net.GetEventRoute()
+	// 心跳时进行数据同步处理
 	eventRoute.Connect(gnet.NetEventTick, func(from interface{}, key interface{}, value interface{}) interface{} {
 		ctx := from.(gnet.ISessionCtx)
 		sync := ctx.Get(reflect.TypeOf((*entity.PlayerDataSync)(nil)))
@@ -26,6 +27,7 @@ func (this *serviceDataAutoSync) BeanInit() {
 
 		return nil
 	})
+	// 断开连接是，要强制写数据库
 	eventRoute.Connect(gnet.NetEventDisconnect, func(from interface{}, key interface{}, value interface{}) interface{} {
 		ctx := from.(gnet.ISessionCtx)
 		sync := ctx.Get(reflect.TypeOf((*entity.PlayerDataSync)(nil))).(*entity.PlayerDataSync)

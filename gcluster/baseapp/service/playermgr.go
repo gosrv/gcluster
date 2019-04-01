@@ -17,6 +17,11 @@ import (
 	"sync"
 )
 
+const (
+	cacheFlushGapSec = 30
+	dbFlushGapSec    = 300
+)
+
 type PlayerMgr struct {
 	playerId2Channel sync.Map
 	log              *logrus.Logger `log:"app"`
@@ -90,16 +95,22 @@ func (this *PlayerMgr) PlayerLogin(playerId int64, netChannel gproto.INetChannel
 	if loaded {
 		return false
 	}
+	// 玩家相关数据数据初始化
+	// db数据读取
 	attributeGroup := dataAccessor.GetAttributeGroup()
+	// 加载器
 	loader := dataAccessor.GetDataLoader(meta.PlayerBaseData)
+	// 存储器
 	saver := dataAccessor.GetDataSaver(meta.PlayerBaseData)
+	// 加载玩家数据
 	playerData := this.LoadPlayerData(playerId, loader)
 	playerInfo := entity.NewPlayerInfo()
 	onlineData := entity.NewPlayerOnlineData()
+	// 数据同步
 	syncData := entity.NewPlayerDataSync(playerData, playerInfo,
-		20, 60, netChannel,
+		cacheFlushGapSec, dbFlushGapSec, netChannel,
 		saver, attributeGroup)
-
+	// 将相关属性保存到session上
 	ctx.SetAttribute(gnet.ScopeSession, reflect.TypeOf(playerData), playerData)
 	ctx.SetAttribute(gnet.ScopeSession, reflect.TypeOf(playerInfo), playerInfo)
 	ctx.SetAttribute(gnet.ScopeSession, reflect.TypeOf(onlineData), onlineData)

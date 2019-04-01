@@ -6,6 +6,7 @@ import (
 )
 
 type routeMap struct {
+	keys            []interface{}
 	routes          map[interface{}][]gproto.FProcessor
 	routeDefault    gproto.FProcessor
 	single          bool
@@ -20,15 +21,23 @@ func NewRouteMap(single bool, showNoRouteWarn bool) gproto.IRoute {
 	}
 }
 
+func (this *routeMap) GetRouteKeys() []interface{} {
+	return this.keys
+}
+
 func (this *routeMap) Connect(key interface{}, processor gproto.FProcessor) {
 	if key == nil {
 		this.routeDefault = processor
 		return
 	}
-	if this.single && len(this.routes[key]) > 0 {
+	oldRoutes := this.routes[key]
+	if this.single && len(oldRoutes) > 0 {
 		glog.Panic("duplicate route key %v connect", key)
 	}
-	this.routes[key] = append(this.routes[key], processor)
+	if len(oldRoutes) == 0 {
+		this.keys = append(this.keys, key)
+	}
+	this.routes[key] = append(oldRoutes, processor)
 }
 
 func (this *routeMap) GetRoute(key interface{}) []gproto.FProcessor {

@@ -68,11 +68,9 @@ func (this *sessionCtx) Clear(scope int) {
 
 func (this *sessionCtx) GetByType(tp reflect.Type) interface{} {
 	// 先进行精确查找
-	for _, attrs := range this.sessionAttributes {
-		v, ok := attrs[tp]
-		if ok {
-			return v
-		}
+	ins := this.Get(tp)
+	if ins != nil && reflect.TypeOf(ins).AssignableTo(tp) {
+		return ins
 	}
 
 	// 遍历查找

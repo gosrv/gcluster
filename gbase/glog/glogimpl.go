@@ -74,7 +74,7 @@ func (this *logrusLog) Redirect(base, name string, loader gioc.IConfigLoader) er
 
 func redirect(base, name string, loader gioc.IConfigLoader) error {
 	cfg := &LogConfig{}
-	err := loader.Config().Get(base, name).Scan(cfg)
+	err := loader.Config().Get(base, "logger", name).Scan(cfg)
 	if err != nil {
 		return err
 	}

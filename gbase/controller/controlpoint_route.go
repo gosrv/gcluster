@@ -14,6 +14,10 @@ func NewControlPointRoute(cpGroup IControlPointGroup) *ControlPointRoute {
 	return &ControlPointRoute{cpGroup: cpGroup}
 }
 
+func (this *ControlPointRoute) GetRouteKeys() []interface{} {
+	return this.GetRouteKeys()
+}
+
 func (this *ControlPointRoute) Connect(key interface{}, processor gproto.FProcessor) {
 	glog.Panic("not support")
 }

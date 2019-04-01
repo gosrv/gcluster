@@ -29,7 +29,7 @@ func NewControllerLogin() *controllerLogin {
 	}
 }
 
-// 登陆，如果密码为空，认为是匿名登陆，返回一个验证token
+// 登陆请求，如果密码为空，认为是匿名登陆，返回一个验证token
 func (this *controllerLogin) Login(ctx gnet.ISessionCtx, param struct{ account, password string }) *entity.LoginResult {
 	// 先尝试缓存
 	tokenCtx := this.serviceLogin.loadTokenByAcc(param.account)

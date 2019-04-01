@@ -14,6 +14,10 @@ func NewRouteDelegate(modifible bool) *RouteDelegate {
 	return &RouteDelegate{modifible: modifible}
 }
 
+func (this *RouteDelegate) GetRouteKeys() []interface{} {
+	return this.raw.GetRouteKeys()
+}
+
 func (this *RouteDelegate) SetDelegate(raw gproto.IRoute) {
 	this.raw = raw
 }

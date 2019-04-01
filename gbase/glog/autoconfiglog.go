@@ -9,7 +9,7 @@ type AutoConfigLog struct {
 	gioc.IBeanCondition
 	gioc.IConfigBase
 	tagProcessor *LogTagProcessor
-	logConfigs   map[string]*LogConfig `cfg.d:""`
+	logConfigs   map[string]*LogConfig `cfg.d:"logger"`
 	*LogDriver
 	domain string
 }

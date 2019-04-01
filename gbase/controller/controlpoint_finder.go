@@ -16,6 +16,7 @@ func (this FuncTypeControlPointFinder) ControlPointFind(bean IController, group 
 	this(bean, group)
 }
 
+// 第一个参数是ISessionCtx，第二个是网络消息的控制器函数查找
 func typeControlPointFinder(bean IController, group IControlPointGroup) {
 	rval := reflect.ValueOf(bean)
 	if rval.Kind() != reflect.Ptr || rval.Elem().Kind() == reflect.Ptr {
@@ -32,6 +33,8 @@ func typeControlPointFinder(bean IController, group IControlPointGroup) {
 		}
 		// 返回参数最多1个
 		if method.Type().NumOut() >= 2 {
+			glog.Warn("may be a control point, but has wrong out num %v:%v",
+				reflect.TypeOf(bean), method.Type().Name())
 			continue
 		}
 		keyt := method.Type().In(1)

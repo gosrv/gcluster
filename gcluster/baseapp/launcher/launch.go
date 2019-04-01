@@ -16,11 +16,13 @@ import (
 	"github.com/gosrv/goioc/util"
 )
 
+// 客户端网络出了
 func initBaseNet(builder gioc.IBeanContainerBuilder) {
+	// pb消息编解码器，4字节长度 + 2字节proto id + proto
 	idtype := entity.NewLogicMsgIds()
 	encoder := codec.NewNetMsgFixLenProtobufEncoder(idtype)
 	decoder := codec.NewNetMsgFixLenProtobufDecoder(idtype)
-
+	// 创建网络模块，这里使用了数据自动同步路由器AutoSyncDataRoute
 	net := tcpnet.NewTcpNetServer("pcluster.basenet", "",
 		encoder, decoder, nil, entity.NewAutoSyncDataRoute())
 	builder.AddBean(net)
@@ -41,7 +43,6 @@ func initServices(builder gioc.IBeanContainerBuilder) {
 		gmongo.NewAutoConfigMongo("pcluster.mongo", ""),
 		ghttp.NewHttpServer("pcluster.http", nil),
 		common.NewClusterNodeMgr(),
-
 		controller.NewControllerLogin(),
 		controller.NewControllerLogic(),
 		service.NewPlayerMgr(),

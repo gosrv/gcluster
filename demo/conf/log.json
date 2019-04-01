@@ -1,27 +1,29 @@
 {
   "pcluster.log": {
-    "engine": {
-      "Level": "trace",
-      "Output": {
-        "console": {},
-        "file": {
-          "name": "engine.log"
+    "logger" : {
+      "engine": {
+        "Level": "trace",
+        "Output": {
+          "console": {},
+          "file": {
+            "name": "engine.log"
+          }
+        },
+        "TextFormatter" : {
+          "FullTimestamp": true
         }
       },
-      "TextFormatter" : {
-        "FullTimestamp": true
-      }
-    },
-    "app": {
-      "Level": "trace",
-      "Output": {
-        "console": {},
-        "file": {
-          "name": "app.log"
+      "app": {
+        "Level": "trace",
+        "Output": {
+          "console": {},
+          "file": {
+            "name": "app.log"
+          }
+        },
+        "TextFormatter" : {
+          "FullTimestamp": true
         }
-      },
-      "TextFormatter" : {
-        "FullTimestamp": true
       }
     }
   }
