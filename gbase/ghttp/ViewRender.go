@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"html/template"
+	"io/ioutil"
 	"reflect"
 	"sync"
 )
@@ -68,7 +69,11 @@ func (this *textTemplateViewRender) obtainTemplate(view string) (*template.Templ
 		return tmpl.(*template.Template), nil
 	}
 	tmpFileName := this.prefix + view + this.suffix
-	tmpl, err := template.New(this.name).ParseFiles(tmpFileName)
+	fdata, err := ioutil.ReadFile(tmpFileName)
+	if err != nil{
+		return nil, err
+	}
+	tmpl, err = template.New(this.name).ParseFiles(string(fdata))
 	if err != nil {
 		return nil, err
 	}
@@ -77,6 +82,12 @@ func (this *textTemplateViewRender) obtainTemplate(view string) (*template.Templ
 }
 
 func (this *textTemplateViewRender) RendView(obj interface{}) ([]byte, error) {
+	rval := reflect.ValueOf(obj)
+	for rval.Kind() == reflect.Ptr {
+		rval = rval.Elem()
+	}
+	obj = rval.Interface()
+
 	switch obj.(type) {
 	case string:
 		tmpl, err := this.obtainTemplate(obj.(string))

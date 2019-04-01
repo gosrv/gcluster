@@ -13,6 +13,7 @@ func initServices(beanContainerBuilder gioc.IBeanContainerBuilder) {
 		ghttp.NewHttpServer("demo.http", nil),
 		// http逻辑处理bean
 		ctl.NewControllerHttp(),
+		ctl.NewControllerHttpTemplate(),
 	)
 }
 
