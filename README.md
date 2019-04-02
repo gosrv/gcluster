@@ -1,6 +1,7 @@
 # gcluster
 go game server
 
+# 感谢您的支持
 # star it && QQ群：869428810
 
 # Features
