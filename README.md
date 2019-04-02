@@ -14,6 +14,7 @@ go game server
 demo/http   http使用示例  
 demo/db     db使用示例  
 gcluster/loginapp  基于http的登录服示例  
-gcluster/baseapp    可以处理逻辑的baseapp示例  
+gcluster/baseapp    可以处理逻辑的baseapp示例
+gcluster/doc    文档说明  
 
 
