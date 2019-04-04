@@ -3,7 +3,6 @@ package datasync
 import (
 	"github.com/gosrv/goioc/util"
 	"math"
-	"reflect"
 )
 
 type DirtyContainerVector struct {
@@ -38,14 +37,18 @@ func (this *DirtyContainerVector) Set(idx interface{}, val interface{}) {
 
 	old := this.listDatas[realIdx]
 	this.listDatas[realIdx] = val
-	if old != nil && reflect.TypeOf(old).AssignableTo(IDirtyContainerMarkType) {
-		old.(IDirtyContainerMark).Uninit()
+	if old != nil {
+		if dirtyContainerMark, ok := old.(IDirtyContainerMark); ok {
+			dirtyContainerMark.Uninit()
+		}
 	}
 
-	if val != nil && reflect.TypeOf(val).AssignableTo(IDirtyContainerMarkType) {
-		container := val.(IDirtyContainerMark)
-		container.Init(this, idx)
-		container.MarkAllDirty()
+	if val != nil {
+		if dirtyContainerMark, ok := val.(IDirtyContainerMark); ok {
+			container := dirtyContainerMark
+			container.Init(this, idx)
+			container.MarkAllDirty()
+		}
 	}
 
 	this.MarkDirtyUp(idx)
@@ -78,8 +81,10 @@ func (this *DirtyContainerVector) Size() int {
 
 func (this *DirtyContainerVector) Clear() {
 	for i, k := range this.listDatas {
-		if k != nil && reflect.TypeOf(k).AssignableTo(IDirtyContainerMarkType) {
-			k.(IDirtyContainerMark).Uninit()
+		if k != nil {
+			if dirtyContainerMark, ok := k.(IDirtyContainerMark); ok {
+				dirtyContainerMark.Uninit()
+			}
 		}
 		this.listDatas[i] = nil
 	}

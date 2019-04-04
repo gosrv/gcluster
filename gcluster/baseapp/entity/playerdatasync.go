@@ -6,7 +6,6 @@ import (
 	"github.com/gosrv/gcluster/gbase/gdb"
 	"github.com/gosrv/gcluster/gbase/glog"
 	"github.com/gosrv/gcluster/gbase/gproto"
-	"reflect"
 	"time"
 )
 
@@ -58,8 +57,8 @@ func NewPlayerDataSync(data *PlayerData, info *PlayerInfo, cacheFlushGapSec int6
 	}
 	// 如果有多级属性存储，我们可以把第一级设为可过期
 	// 这里使用了redis和mongo，相当于把redis设为热数据
-	if reflect.TypeOf(attributeGroup).AssignableTo(gdb.IDataExpireableType) {
-		datasync.dataExpireable = attributeGroup.(gdb.IDataExpireable)
+	if dataExpireable, ok := attributeGroup.(gdb.IDataExpireable); ok {
+		datasync.dataExpireable = dataExpireable
 	}
 	datasync.data.Init(datasync.dirtyMonitor, IdxPlayerDataMonitor)
 	datasync.info.Init(datasync.dirtyMonitor, IdxPlayerInfoMonitor)

@@ -93,7 +93,7 @@ func (this *HttpServer) BeanStart() {
 	allGroup := this.controlPointGroupMgr.GetAllControlGroup()
 	for name, group := range allGroup {
 		for route, point := range group.GetAllControlPoints() {
-			if !reflect.TypeOf(point.Controller).AssignableTo(IHttpControllerType) {
+			if _, ok := point.Controller.(IHttpController); !ok {
 				continue
 			}
 			cpoint := this.filter(name, route.(string), point)

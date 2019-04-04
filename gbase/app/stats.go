@@ -18,7 +18,7 @@ type RuntimeStats struct {
 	// 协程数量
 	NumGoroutine int
 	// CPU数
-	NumCpu	int
+	NumCpu int
 	// CGO 调用次数
 	NumCgoCall int64
 }

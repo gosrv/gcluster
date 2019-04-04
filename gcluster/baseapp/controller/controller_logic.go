@@ -33,6 +33,7 @@ func (this *ControllerLogic) Logic(ctx gnet.ISessionCtx, msg *netproto.CS_Tick,
 	playerData *entity.PlayerData, playerInfo *entity.PlayerInfo) *netproto.SC_Tick {
 	return &netproto.SC_Tick{}
 }
+
 /*
 func (this *ControllerLogic) Logic(ctx gnet.ISessionCtx, msg *netproto.CS_Tick) *netproto.SC_Tick {
 	return &netproto.SC_Tick{}

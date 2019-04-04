@@ -111,6 +111,8 @@ github.com/gosrv/goioc v0.0.0-20190401015054-0464d8b9c6d5 h1:u2dZW7xxrluuGSzV1/8
 github.com/gosrv/goioc v0.0.0-20190401015054-0464d8b9c6d5/go.mod h1:su7RF+1u6Bf9DXq9+5FvMaSW4oOVjLVDr/kv3QMAEdo=
 github.com/gosrv/goioc v0.0.0-20190401114416-bab4f917d233 h1:JJE9reuSHAdAhFnsUh/Rjr/Fbs1FgHVFb1dwy6vusWM=
 github.com/gosrv/goioc v0.0.0-20190401114416-bab4f917d233/go.mod h1:su7RF+1u6Bf9DXq9+5FvMaSW4oOVjLVDr/kv3QMAEdo=
+github.com/gosrv/goioc v0.0.0-20190404153926-b4779b76263d h1:MJ+m3HwnOSkCJBurpKWnLrhT9qBjey7tQ6lZuZ7NdOM=
+github.com/gosrv/goioc v0.0.0-20190404153926-b4779b76263d/go.mod h1:su7RF+1u6Bf9DXq9+5FvMaSW4oOVjLVDr/kv3QMAEdo=
 github.com/gregjones/httpcache v0.0.0-20181110185634-c63ab54fda8f/go.mod h1:FecbI9+v66THATjSRHfNgh1IVFe/9kFxbXtjV0ctIMA=
 github.com/grpc-ecosystem/go-grpc-middleware v1.0.0/go.mod h1:FiyG127CGDf3tlThmgyCl78X/SZQqEOJBCDaAfeWzPs=
 github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0/go.mod h1:8NvIoxWQoOIhqOTXgfV/d3M/q6VIi02HzZEHgUlZvzk=

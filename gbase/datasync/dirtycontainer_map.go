@@ -2,7 +2,6 @@ package datasync
 
 import (
 	"github.com/gosrv/goioc/util"
-	"reflect"
 )
 
 type DirtyValue struct {
@@ -44,15 +43,18 @@ func (this *DirtyContainerMap) Set(key interface{}, val interface{}) {
 	dv := NewDirtyValue(val, true)
 	old := this.datas[key]
 	this.datas[key] = dv
-	if old != nil && old.value != nil && reflect.TypeOf(old.value).AssignableTo(IDirtyContainerMarkType) {
-		old.value.(IDirtyContainerMark).Uninit()
+	if old != nil && old.value != nil {
+		if dirtyContainerMark, ok := old.value.(IDirtyContainerMark); ok {
+			dirtyContainerMark.Uninit()
+		}
 	}
 	this.dirtys[key] = dv
 
-	if val != nil && reflect.TypeOf(val).AssignableTo(IDirtyContainerMarkType) {
-		vc := val.(IDirtyContainerMark)
-		vc.Init(this, key)
-		vc.MarkAllDirty()
+	if val != nil {
+		if dirtyContainerMark, ok := val.(IDirtyContainerMark); ok {
+			dirtyContainerMark.Init(this, key)
+			dirtyContainerMark.MarkAllDirty()
+		}
 	}
 
 	this.MarkDirtyUp(key)
@@ -96,8 +98,10 @@ func (this *DirtyContainerMap) Size() int {
 func (this *DirtyContainerMap) Clear() {
 	// 这里只能置空，不能删除，删除要等cleardirty时进行，不然无法知道哪些值被clear了
 	for _, val := range this.datas {
-		if val != nil && val.value != nil && reflect.TypeOf(val.value).AssignableTo(IDirtyContainerMarkType) {
-			val.value.(IDirtyContainerMark).Uninit()
+		if val != nil && val.value != nil {
+			if dirtyContainerMark, ok := val.value.(IDirtyContainerMark); ok {
+				dirtyContainerMark.Uninit()
+			}
 		}
 		val.value = nil
 	}
@@ -162,8 +166,10 @@ func (this *DirtyContainerMap) ClearDirty() {
 	for k, v := range this.dirtys {
 		if v == nil && v.value == nil {
 			delete(this.dirtys, k)
-		} else if !this.allDirty && reflect.TypeOf(v.value).AssignableTo(IDirtyContainerMarkType) {
-			v.value.(IDirtyContainerMark).ClearDirty()
+		} else if !this.allDirty {
+			if dirtyContainerMark, ok := v.value.(IDirtyContainerMark); ok {
+				dirtyContainerMark.ClearDirty()
+			}
 		}
 	}
 
@@ -171,8 +177,8 @@ func (this *DirtyContainerMap) ClearDirty() {
 		for k, v := range this.datas {
 			if v == nil || v.value == nil {
 				delete(this.datas, k)
-			} else if reflect.TypeOf(v.value).AssignableTo(IDirtyContainerMarkType) {
-				v.value.(IDirtyContainerMark).ClearDirty()
+			} else if dirtyContainerMark, ok := v.value.(IDirtyContainerMark); ok {
+				dirtyContainerMark.ClearDirty()
 			}
 		}
 	}
