@@ -8,15 +8,15 @@ import (
 	entity2 "github.com/gosrv/gcluster/gcluster/baseapp/entity"
 	"github.com/gosrv/gcluster/gcluster/common/entity"
 	"github.com/gosrv/gcluster/gcluster/proto"
+	"github.com/gosrv/glog"
 	"github.com/gosrv/goioc/util"
-	"github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
 	"reflect"
 )
 
 type serviceLogic struct {
-	log        *logrus.Logger       `log:"app"`
+	log        glog.IFieldLogger    `log:"app"`
 	serverHost string               `cfg:"server.host"`
 	net        *tcpnet.TcpNetServer `bean:""`
 	urlLogin   string               `cfg:"url.login.login"`
@@ -25,7 +25,7 @@ type serviceLogic struct {
 func (this *serviceLogic) BeanInit() {
 	eventRoute := this.net.GetEventRoute()
 	eventRoute.Connect(gnet.NetEventConnect, func(from interface{}, key interface{}, val interface{}) interface{} {
-		this.log.Debugf("net connect event")
+		this.log.Debug("net connect event")
 		ctx := from.(gnet.ISessionCtx)
 		playerData := entity2.NewPlayerData()
 		playerInfo := entity2.NewPlayerInfo()
@@ -36,7 +36,7 @@ func (this *serviceLogic) BeanInit() {
 		return nil
 	})
 	eventRoute.Connect(gnet.NetEventDisconnect, func(from interface{}, key interface{}, val interface{}) interface{} {
-		this.log.Debugf("net disconnect event")
+		this.log.Debug("net disconnect event")
 		return nil
 	})
 }

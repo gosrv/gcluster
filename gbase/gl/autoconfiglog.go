@@ -1,6 +1,7 @@
-package glog
+package gl
 
 import (
+	"github.com/gosrv/glog"
 	"github.com/gosrv/goioc"
 	"reflect"
 )
@@ -9,9 +10,9 @@ type AutoConfigLog struct {
 	gioc.IBeanCondition
 	gioc.IConfigBase
 	tagProcessor *LogTagProcessor
-	logConfigs   map[string]*LogConfig `cfg.d:"logger"`
-	*LogDriver
-	domain string
+	logConfigs   *glog.ConfigLogRoot `cfg.d:"logger"`
+	logFactory   glog.ILogFactory    `bean:""`
+	domain       string
 }
 
 var _ gioc.ITagProcessor = (*AutoConfigLog)(nil)
@@ -23,15 +24,9 @@ func NewAutoConfigLog(cfgBase, domain string) *AutoConfigLog {
 		domain:         domain,
 	}
 }
-func (this *AutoConfigLog) BeanBeforeTagProcess(tagProcessor gioc.ITagProcessor, beanContainer gioc.IBeanContainer) {
 
-}
-func (this *AutoConfigLog) BeanAfterTagProcess(tagProcessor gioc.ITagProcessor, beanContainer gioc.IBeanContainer) {
-	if tagProcessor.TagProcessorName() != gioc.ConfigTagProcessor {
-		return
-	}
-	this.LogDriver = NewLogDriver(this.logConfigs)
-	this.tagProcessor = NewLogTagProcessor(this.domain, this.LogDriver)
+func (this *AutoConfigLog) PrepareProcess() {
+	this.tagProcessor = NewLogTagProcessor(this.domain, this.logFactory)
 }
 
 func (this *AutoConfigLog) TagProcessorName() string {

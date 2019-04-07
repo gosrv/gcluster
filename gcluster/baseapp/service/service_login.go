@@ -9,11 +9,11 @@ import (
 	"github.com/gosrv/gcluster/gcluster/common"
 	"github.com/gosrv/gcluster/gcluster/common/meta"
 	"github.com/gosrv/gcluster/gcluster/proto"
-	"github.com/sirupsen/logrus"
+	"github.com/gosrv/glog"
 )
 
 type ServiceLogin struct {
-	log                   *logrus.Logger         `log:"app"`
+	log                   glog.IFieldLogger      `log:"app"`
 	net                   *tcpnet.TcpNetServer   `bean:""`
 	playerMgr             *PlayerMgr             `bean:""`
 	nodeUuid              string                 `bean:""`
@@ -34,9 +34,9 @@ func (this *ServiceLogin) BeanInit() {
 			this.playerMgr.PlayerLogout(playerIdIns.(int64))
 			attributeGroup := ctx.Get(gdb.IDBAttributeGroupType).(gdb.IDBAttributeGroup)
 			attributeGroup.CasSetAttribute(meta.BaseApp, this.nodeUuid, "")
-			this.log.Debugf("player %v disconnect", playerIdIns.(int64))
+			this.log.Debug("player %v disconnect", playerIdIns.(int64))
 		} else {
-			this.log.Debugf("player disconnect")
+			this.log.Debug("player disconnect")
 		}
 		return nil
 	})
@@ -53,20 +53,20 @@ func NewServiceLogin() *ServiceLogin {
 func (this *ServiceLogin) ProcessLogin(netChannel gproto.INetChannel, ctx gnet.ISessionCtx, playerId int64) netproto.E_Code {
 	// 重复登陆请求
 	if ctx.Get(gdb.IDBAttributeGroupType) != nil {
-		this.log.Debugf("player %v login failed, relogin in same connection.", playerId)
+		this.log.Debug("player %v login failed, relogin in same connection.", playerId)
 		return netproto.E_Code_E_INVALID_OPT
 	}
 	// 同服重登陆处理
 	oldChannel := this.playerMgr.GetNetchannelByPlayerId(playerId)
 	if oldChannel != nil {
 		oldChannel.Close()
-		this.log.Debugf("player %v relogin in same server", playerId)
+		this.log.Debug("player %v relogin in same server", playerId)
 		return netproto.E_Code_E_RELOGIN
 	}
 
 	// 禁止登陆
 	if this.playerMgr.IsForbidLogin(playerId) {
-		this.log.Debugf("player %v login failed, forbid login.", playerId)
+		this.log.Debug("player %v login failed, forbid login.", playerId)
 		return netproto.E_Code_E_INVALID_OPT
 	}
 
@@ -77,11 +77,11 @@ func (this *ServiceLogin) ProcessLogin(netChannel gproto.INetChannel, ctx gnet.I
 	// 跨服登陆处理
 	code := this.doClusterLogin(playerId, attributeGroup)
 	if code != netproto.E_Code_E_OK {
-		this.log.Debugf("player %v login failed.", playerId)
+		this.log.Debug("player %v login failed.", playerId)
 		return code
 	}
 	if !this.playerMgr.PlayerLogin(playerId, netChannel, ctx, dataAccessor) {
-		this.log.Debugf("player %v login failed. same time login.", playerId)
+		this.log.Debug("player %v login failed. same time login.", playerId)
 		return netproto.E_Code_E_RELOGIN
 	}
 	ctx.Set(entity.PlayerIdKey, playerId)
@@ -98,14 +98,14 @@ func (this *ServiceLogin) doClusterLogin(playerId int64, attributeGroup gdb.IDBA
 
 	oldBaseAppUuid, err := attributeGroup.GetAttribute(meta.BaseApp)
 	if err != nil {
-		this.log.WithFields(logrus.Fields{"playerId": playerId, "attr": meta.BaseApp}).
+		this.log.WithFields(glog.LF{"playerId": playerId, "attr": meta.BaseApp}).
 			Warn("get player base app attribute error")
 		return netproto.E_Code_E_ERROR
 	}
 
 	if oldBaseAppUuid == this.nodeUuid {
 		// 同服有两个人同时登陆一个账号
-		this.log.WithFields(logrus.Fields{"playerId": playerId, "uuid": this.nodeUuid}).
+		this.log.WithFields(glog.LF{"playerId": playerId, "uuid": this.nodeUuid}).
 			Warn("some server relogin process")
 		return netproto.E_Code_E_RELOGIN
 	}
@@ -113,11 +113,11 @@ func (this *ServiceLogin) doClusterLogin(playerId int64, attributeGroup gdb.IDBA
 	if !this.clusterNodeMgr.IsNodeActive(oldBaseAppUuid) {
 		// 服务器已死，抢先登陆
 		if attributeGroup.CasSetAttribute(meta.BaseApp, oldBaseAppUuid, this.nodeUuid) {
-			this.log.WithFields(logrus.Fields{"playerId": playerId}).
+			this.log.WithFields(glog.LF{"playerId": playerId}).
 				Warn("player relogin in race server success")
 			return netproto.E_Code_E_OK
 		} else {
-			this.log.WithFields(logrus.Fields{"playerId": playerId}).
+			this.log.WithFields(glog.LF{"playerId": playerId}).
 				Warn("player relogin in race server failed")
 			return netproto.E_Code_E_RELOGIN
 		}
@@ -125,7 +125,7 @@ func (this *ServiceLogin) doClusterLogin(playerId int64, attributeGroup gdb.IDBA
 
 	// 重复登陆处理，通知踢人
 	this.clusterNodeMgr.SendMsgToNode(oldBaseAppUuid)
-	this.log.WithFields(logrus.Fields{"playerId": playerId}).
+	this.log.WithFields(glog.LF{"playerId": playerId}).
 		Warn("player relogin failed, kick other server player")
 	return netproto.E_Code_E_RELOGIN
 }

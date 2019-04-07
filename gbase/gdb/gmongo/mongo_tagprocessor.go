@@ -1,7 +1,8 @@
 package gmongo
 
 import (
-	"github.com/gosrv/gcluster/gbase/glog"
+	"github.com/gosrv/gcluster/gbase/gl"
+	"github.com/gosrv/goioc"
 	"reflect"
 )
 
@@ -13,6 +14,12 @@ const (
 type MongoTagProcessor struct {
 	driver *mongoDBDriver
 }
+
+func (this *MongoTagProcessor) PrepareProcess() {
+
+}
+
+var _ gioc.ITagProcessor = (*MongoTagProcessor)(nil)
 
 func NewMongoTagProcessor(driver *mongoDBDriver) *MongoTagProcessor {
 	return &MongoTagProcessor{driver: driver}
@@ -31,7 +38,7 @@ func (this *MongoTagProcessor) TagProcess(bean interface{}, field reflect.Value,
 		return
 	}
 	if len(mongoCol) == 0 {
-		glog.Panic("mongo tag [%v] must has a value in [%v:%v]", MongoTag,
+		gl.Panic("mongo tag [%v] must has a value in [%v:%v]", MongoTag,
 			reflect.TypeOf(bean), field.Type())
 	}
 

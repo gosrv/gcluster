@@ -3,7 +3,7 @@ package gmongo
 import (
 	"github.com/globalsign/mgo"
 	"github.com/gosrv/gcluster/gbase/gdb"
-	"github.com/gosrv/gcluster/gbase/glog"
+	"github.com/gosrv/gcluster/gbase/gl"
 	"github.com/gosrv/goioc"
 	"reflect"
 )
@@ -30,7 +30,7 @@ func (this *mongoDBDriver) Name() string {
 func NewMongoDriver(name string, url string, dbname string) *mongoDBDriver {
 	session, err := mgo.Dial(url)
 	if err != nil {
-		glog.Panic("mongo dial failed %v", err)
+		gl.Panic("mongo dial failed %v", err)
 	}
 	return &mongoDBDriver{
 		name:    name,

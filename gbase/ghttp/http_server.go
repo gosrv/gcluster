@@ -6,8 +6,8 @@ import (
 	"github.com/gosrv/gcluster/gbase/controller"
 	"github.com/gosrv/gcluster/gbase/gnet"
 	"github.com/gosrv/gcluster/gbase/gutil"
+	"github.com/gosrv/glog"
 	"github.com/gosrv/goioc"
-	"github.com/sirupsen/logrus"
 	"net/http"
 	"reflect"
 	"sync"
@@ -17,8 +17,8 @@ import (
 type HttpServer struct {
 	gioc.IBeanCondition
 	gioc.IConfigBase
-	log                  *logrus.Logger `log:"engine"`
-	httpHost             string         `cfg.d:"http.host"`
+	log                  glog.IFieldLogger `log:"engine"`
+	httpHost             string            `cfg.d:"http.host"`
 	serverMux            *http.ServeMux
 	controlPointGroupMgr controller.IControlPointGroupMgr `bean`
 	ctxs                 *sync.Map
@@ -108,11 +108,11 @@ func (this *HttpServer) BeanStart() {
 				if rep != nil {
 					data, err := cpoint.Controller.(IHttpController).ViewRender().RendView(rep)
 					if err != nil {
-						this.log.Warnf("http view rend error %v", err)
+						this.log.Warn("http view rend error %v", err)
 					} else {
 						_, err = writer.Write(data)
 						if err != nil {
-							this.log.Warnf("http response write error %v", err)
+							this.log.Warn("http response write error %v", err)
 						}
 					}
 				}

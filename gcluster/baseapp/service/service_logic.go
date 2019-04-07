@@ -4,11 +4,11 @@ import (
 	"github.com/gosrv/gcluster/gbase/gnet"
 	"github.com/gosrv/gcluster/gbase/gproto"
 	"github.com/gosrv/gcluster/gbase/tcpnet"
-	"github.com/sirupsen/logrus"
+	"github.com/gosrv/glog"
 )
 
 type ServiceLogic struct {
-	log *logrus.Logger       `log:"app"`
+	log glog.IFieldLogger    `log:"app"`
 	net *tcpnet.TcpNetServer `bean:""`
 }
 
@@ -17,13 +17,13 @@ func (this *ServiceLogic) BeanInit() {
 	eventRoute.Connect(gnet.NetEventConnect, func(from interface{}, key interface{}, data interface{}) interface{} {
 		ctx := from.(gnet.ISessionCtx)
 		netChannel := ctx.Get(gproto.INetChannelType).(gproto.INetChannel)
-		this.log.Debugf("net connect event %v->%v", netChannel.RemoteAddr(), netChannel.LocalAddr())
+		this.log.Debug("net connect event %v->%v", netChannel.RemoteAddr(), netChannel.LocalAddr())
 		return nil
 	})
 	eventRoute.Connect(gnet.NetEventDisconnect, func(from interface{}, key interface{}, data interface{}) interface{} {
 		ctx := from.(gnet.ISessionCtx)
 		netChannel := ctx.Get(gproto.INetChannelType).(gproto.INetChannel)
-		this.log.Debugf("net disconnect event %v->%v", netChannel.RemoteAddr(), netChannel.LocalAddr())
+		this.log.Debug("net disconnect event %v->%v", netChannel.RemoteAddr(), netChannel.LocalAddr())
 		return nil
 	})
 }

@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"github.com/gosrv/gcluster/gbase/glog"
+	"github.com/gosrv/gcluster/gbase/gl"
 	"github.com/gosrv/gcluster/gbase/gnet"
 	"reflect"
 )
@@ -33,13 +33,13 @@ func typeControlPointFinder(bean IController, group IControlPointGroup) {
 		}
 		// 返回参数最多1个
 		if method.Type().NumOut() >= 2 {
-			glog.Warn("may be a control point, but has wrong out num %v:%v",
+			gl.Warn("may be a control point, but has wrong out num %v:%v",
 				reflect.TypeOf(bean), method.Type().Name())
 			continue
 		}
 		keyt := method.Type().In(1)
 		if group.GetControlPoint(keyt) != nil {
-			glog.Panic("duplicate control point %v in %v and %v", keyt, reflect.TypeOf(bean),
+			gl.Panic("duplicate control point %v in %v and %v", keyt, reflect.TypeOf(bean),
 				reflect.TypeOf(group.GetControlPoint(keyt).Bean))
 		}
 

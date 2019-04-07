@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"github.com/gosrv/gcluster/gbase/glog"
+	"github.com/gosrv/gcluster/gbase/gl"
 	"github.com/gosrv/gcluster/gbase/gnet"
 	"github.com/gosrv/gcluster/gbase/gproto"
 )
@@ -19,11 +19,11 @@ func (this *ControlPointRoute) GetRouteKeys() []interface{} {
 }
 
 func (this *ControlPointRoute) Connect(key interface{}, processor gproto.FProcessor) {
-	glog.Panic("not support")
+	gl.Panic("not support")
 }
 
 func (this *ControlPointRoute) GetRoute(key interface{}) []gproto.FProcessor {
-	glog.Panic("not support")
+	gl.Panic("not support")
 	return nil
 }
 

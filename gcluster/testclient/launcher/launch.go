@@ -3,10 +3,13 @@ package main
 import (
 	"github.com/gosrv/gcluster/gbase/app"
 	"github.com/gosrv/gcluster/gbase/codec"
+	"github.com/gosrv/gcluster/gbase/gl"
 	"github.com/gosrv/gcluster/gbase/tcpnet"
 	"github.com/gosrv/gcluster/gcluster/baseapp/entity"
 	"github.com/gosrv/gcluster/gcluster/testclient/logic"
+	"github.com/gosrv/glog"
 	"github.com/gosrv/goioc"
+	"github.com/gosrv/goioc/util"
 )
 
 func initBaseNet(builder gioc.IBeanContainerBuilder) {
@@ -25,10 +28,25 @@ func initServices(beanContainerBuilder gioc.IBeanContainerBuilder) {
 	)
 }
 
+func initLog(configLoader gioc.IConfigLoader, builder gioc.IBeanContainerBuilder) {
+	logroot := &glog.ConfigLogRoot{}
+	configLoader.Config().Get("pcluster.log").Scan(logroot)
+
+	logBuilder := glog.NewLogFactoryBuilder()
+	logFactory, err := logBuilder.Build(logroot)
+	util.VerifyNoError(err)
+
+	// 重定向系统日志
+	err = gl.Redirect(logFactory.GetLogger("engine"))
+	util.VerifyNoError(err)
+	builder.AddBean(logFactory)
+}
+
 func main() {
 	application := app.NewApplication()
 	configLoader := application.InitCli()
 	builder := application.InitBuilder()
+	initLog(configLoader, builder)
 	application.InitBaseBeanBuilder(builder, configLoader)
 
 	initServices(builder)

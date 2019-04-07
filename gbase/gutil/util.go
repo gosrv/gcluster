@@ -2,7 +2,7 @@ package gutil
 
 import (
 	"encoding/json"
-	"github.com/gosrv/gcluster/gbase/glog"
+	"github.com/gosrv/gcluster/gbase/gl"
 	"reflect"
 )
 
@@ -12,7 +12,7 @@ func Json(ins interface{}) string {
 	}
 	val, err := json.Marshal(ins)
 	if err != nil {
-		glog.Panic("to json error %v", reflect.TypeOf(ins))
+		gl.Panic("to json error %v", reflect.TypeOf(ins))
 	}
 	return string(val)
 }

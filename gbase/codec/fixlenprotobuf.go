@@ -3,7 +3,7 @@ package codec
 import (
 	"encoding/hex"
 	"github.com/golang/protobuf/proto"
-	"github.com/gosrv/gcluster/gbase/glog"
+	"github.com/gosrv/gcluster/gbase/gl"
 	"github.com/gosrv/gcluster/gbase/gnet"
 	"github.com/gosrv/gcluster/gbase/gproto"
 	"github.com/gosrv/gcluster/gbase/gutil"
@@ -32,13 +32,13 @@ func (this *NetMsgFixLenProtobufEncoder) Encode(val interface{}) interface{} {
 	tp := reflect.TypeOf(val)
 	id, err := this.idtype.Type2ID(tp)
 	if err != nil {
-		glog.Panic("can not get type id %v:%v", tp, err)
+		gl.Panic("can not get type id %v:%v", tp, err)
 		return nil
 	}
 
 	pbData, err := proto.Marshal(val.(proto.Message))
 	if err != nil {
-		glog.Panic("proto marshal error %v:%v", tp, err)
+		gl.Panic("proto marshal error %v:%v", tp, err)
 		return nil
 	}
 
@@ -83,14 +83,14 @@ func (this *NetMsgFixLenProtobufDecoder) Decode(input interface{}) interface{} {
 
 	tp, err := this.idtype.ID2Type(int(id))
 	if err != nil {
-		glog.Panic("can not find id type %v:%v", id, err)
+		gl.Panic("can not find id type %v:%v", id, err)
 		return nil
 	}
 
 	value := reflect.New(tp.Elem()).Interface().(proto.Message)
 	err = proto.Unmarshal(totalData[HeadLenFixLenProtobuf:], value)
 	if err != nil {
-		glog.Panic("proto unmarshal error %v:%v", tp, hex.EncodeToString(totalData[HeadLenFixLenProtobuf:]))
+		gl.Panic("proto unmarshal error %v:%v", tp, hex.EncodeToString(totalData[HeadLenFixLenProtobuf:]))
 	}
 	return value
 }

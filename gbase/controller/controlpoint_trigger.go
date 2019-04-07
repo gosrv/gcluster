@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"github.com/gosrv/gcluster/gbase/glog"
+	"github.com/gosrv/gcluster/gbase/gl"
 	"github.com/gosrv/gcluster/gbase/gnet"
 	"reflect"
 )
@@ -38,7 +38,7 @@ func typeControlPointTrigger(controlPoint *ControlPoint, ctx gnet.ISessionCtx) i
 	case 1:
 		return reps[0].Interface()
 	default:
-		glog.Panic("invalid return num, expect 1")
+		gl.Panic("invalid return num, expect 1")
 	}
 	return nil
 }

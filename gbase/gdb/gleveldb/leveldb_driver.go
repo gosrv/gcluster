@@ -2,7 +2,7 @@ package gleveldb
 
 import (
 	"github.com/gosrv/gcluster/gbase/gdb"
-	"github.com/gosrv/gcluster/gbase/glog"
+	"github.com/gosrv/gcluster/gbase/gl"
 	"github.com/gosrv/goioc"
 	"github.com/syndtr/goleveldb/leveldb"
 	"reflect"
@@ -25,7 +25,7 @@ type levelDBDriver struct {
 func NewLevelDBDriver(url string, dbname string) *levelDBDriver {
 	db, err := leveldb.OpenFile(url, nil)
 	if err != nil {
-		glog.Panic("level db [%v] open failed %v", url, err)
+		gl.Panic("level db [%v] open failed %v", url, err)
 	}
 	return &levelDBDriver{
 		dbname: dbname,

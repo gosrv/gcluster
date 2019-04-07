@@ -5,8 +5,8 @@ import (
 	"github.com/gosrv/gcluster/gbase/gnet"
 	"github.com/gosrv/gcluster/gbase/gproto"
 	"github.com/gosrv/gcluster/gbase/route"
+	"github.com/gosrv/glog"
 	"github.com/gosrv/goioc"
-	"github.com/sirupsen/logrus"
 	"net/http"
 )
 
@@ -22,10 +22,10 @@ type WebsocketServer struct {
 	gioc.IBeanCondition
 	gioc.IConfigBase
 	// 从配置文件中注入host
-	host    string         `cfg.d:"ws.host"`
-	wsentry string         `cfg.d:"ws.entry" cfg.default:"/ws"`
-	msgType string         `cfg.d:"ws.msgtype" cfg.default:"string"`
-	log     *logrus.Logger `log:"engine"`
+	host    string            `cfg.d:"ws.host"`
+	wsentry string            `cfg.d:"ws.entry" cfg.default:"/ws"`
+	msgType string            `cfg.d:"ws.msgtype" cfg.default:"string"`
+	log     glog.IFieldLogger `log:"engine"`
 	// 注入控制器
 	controlPointCollector controller.IControlPointGroupMgr `bean`
 	eventRoute            gproto.IRoute
@@ -46,7 +46,7 @@ func (this *WebsocketServer) BeanStart() {
 	if len(this.host) > 0 {
 		this.net = GoStartWsServer(this.host, this.wsentry, this.msgType,
 			this.createNetConfig(), this.handler)
-		this.log.Debugf("websocket listen on %v", this.host)
+		this.log.Debug("websocket listen on %v", this.host)
 	}
 }
 

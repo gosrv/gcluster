@@ -2,7 +2,7 @@ package ghttp
 
 import (
 	"github.com/gosrv/gcluster/gbase/controller"
-	"github.com/gosrv/gcluster/gbase/glog"
+	"github.com/gosrv/gcluster/gbase/gl"
 	"github.com/gosrv/gcluster/gbase/gnet"
 	"reflect"
 	"strings"
@@ -89,7 +89,7 @@ func httpControlPointFinder(bean controller.IController, group controller.IContr
 			}
 		}
 		if group.GetControlPoint(key) != nil {
-			glog.Panic("duplicate control point %v in %v and %v", key, reflect.TypeOf(bean),
+			gl.Panic("duplicate control point %v in %v and %v", key, reflect.TypeOf(bean),
 				reflect.TypeOf(group.GetControlPoint(key).Bean))
 		}
 
@@ -139,7 +139,7 @@ func httpControlPointTrigger(controlPoint *controller.ControlPoint, ctx gnet.ISe
 	case 1:
 		return reps[0].Interface()
 	default:
-		glog.Panic("invalid return num, expect 1")
+		gl.Panic("invalid return num, expect 1")
 	}
 	return nil
 }

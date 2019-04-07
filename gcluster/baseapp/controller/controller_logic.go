@@ -6,14 +6,14 @@ import (
 	"github.com/gosrv/gcluster/gcluster/baseapp/entity"
 	"github.com/gosrv/gcluster/gcluster/baseapp/service"
 	"github.com/gosrv/gcluster/gcluster/proto"
-	"github.com/sirupsen/logrus"
+	"github.com/gosrv/glog"
 )
 
 /**
 逻辑消息控制器
 */
 type ControllerLogic struct {
-	log *logrus.Logger `log:"app"`
+	log glog.IFieldLogger `log:"app"`
 	// 控制器标记
 	controller.IController
 	// 逻辑处理

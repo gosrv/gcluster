@@ -1,7 +1,8 @@
 package gredis
 
 import (
-	"github.com/gosrv/gcluster/gbase/glog"
+	"github.com/gosrv/gcluster/gbase/gl"
+	"github.com/gosrv/goioc"
 	"reflect"
 )
 
@@ -15,6 +16,12 @@ type redisTagProcessor struct {
 	boundRedisObjMaker   map[reflect.Type]func(id string) interface{}
 	unboundRedisObjMaker map[reflect.Type]func() interface{}
 }
+
+func (this *redisTagProcessor) PrepareProcess() {
+
+}
+
+var _ gioc.ITagProcessor = (*redisTagProcessor)(nil)
 
 func NewRedisTagProcessor(driver IRedisDriver) *redisTagProcessor {
 	processor := &redisTagProcessor{domain: driver.Domain()}
@@ -74,7 +81,7 @@ func (this *redisTagProcessor) TagProcess(bean interface{}, field reflect.Value,
 		// bound redis object
 		maker, ok := this.boundRedisObjMaker[field.Type()]
 		if !ok {
-			glog.Panic("can not find bound redis object type %v with name %v, in bean %v", field.Type(),
+			gl.Panic("can not find bound redis object type %v with name %v, in bean %v", field.Type(),
 				redisObjName, reflect.TypeOf(bean))
 			return
 		}
@@ -83,7 +90,7 @@ func (this *redisTagProcessor) TagProcess(bean interface{}, field reflect.Value,
 		// unbound redis object
 		maker, ok := this.unboundRedisObjMaker[field.Type()]
 		if !ok {
-			glog.Panic("can not find unbound redis object type %v, in bean %v", field.Type(),
+			gl.Panic("can not find unbound redis object type %v, in bean %v", field.Type(),
 				redisObjName, reflect.TypeOf(bean))
 			return
 		}
@@ -91,7 +98,7 @@ func (this *redisTagProcessor) TagProcess(bean interface{}, field reflect.Value,
 	}
 
 	if redisObj == nil {
-		glog.Panic("make redis object type %v with name %v, in bean %v failed", field.Type(),
+		gl.Panic("make redis object type %v with name %v, in bean %v failed", field.Type(),
 			redisObjName, reflect.TypeOf(bean))
 		return
 	}

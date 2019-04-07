@@ -5,8 +5,8 @@ import (
 	"github.com/gosrv/gcluster/gbase/gnet"
 	"github.com/gosrv/gcluster/gbase/gproto"
 	"github.com/gosrv/gcluster/gbase/route"
+	"github.com/gosrv/glog"
 	"github.com/gosrv/goioc"
-	"github.com/sirupsen/logrus"
 )
 
 /**
@@ -18,8 +18,8 @@ type TcpNetServer struct {
 	gioc.IBeanCondition
 	gioc.IConfigBase
 	// 从配置文件中注入host
-	host string         `cfg.d:"net.host"`
-	log  *logrus.Logger `log:"app"`
+	host string            `cfg.d:"net.host"`
+	log  glog.IFieldLogger `log:"app"`
 	// 注入控制器
 	controlPointCollector controller.IControlPointGroupMgr `bean`
 	eventRoute            gproto.IRoute
@@ -37,7 +37,7 @@ func (this *TcpNetServer) GetEventRoute() gproto.IRoute {
 func (this *TcpNetServer) BeanStart() {
 	if len(this.host) > 0 {
 		GoListen("tcp", this.host, this.createNetConfig())
-		this.log.Debugf("net listen on %v", this.host)
+		this.log.Debug("net listen on %v", this.host)
 	}
 }
 

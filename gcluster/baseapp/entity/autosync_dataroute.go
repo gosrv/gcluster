@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/gosrv/gcluster/gbase/glog"
+	"github.com/gosrv/gcluster/gbase/gl"
 	"github.com/gosrv/gcluster/gbase/gnet"
 	"github.com/gosrv/gcluster/gbase/gproto"
 	"github.com/gosrv/gcluster/gbase/gutil"
@@ -30,7 +30,7 @@ func (this *AutoSyncDataRoute) SetDelegate(raw gproto.IRoute) {
 }
 
 func (this *AutoSyncDataRoute) Connect(key interface{}, processor gproto.FProcessor) {
-	glog.Panic("not support operation")
+	gl.Panic("not support operation")
 }
 
 func (this *AutoSyncDataRoute) GetRoute(key interface{}) []gproto.FProcessor {
@@ -54,9 +54,9 @@ func (this *AutoSyncDataRoute) Trigger(from interface{}, key interface{}, value 
 	}
 	// 日志记录
 	if gutil.IsNilValue(rep) {
-		glog.Debug("msg process %v:%v	->	nil", key, value)
+		gl.Debug("msg process %v:%v	->	nil", key, value)
 	} else {
-		glog.Debug("msg process %v:%v	->	%v:%v",
+		gl.Debug("msg process %v:%v	->	%v:%v",
 			key, value, reflect.TypeOf(rep), rep)
 	}
 	return rep

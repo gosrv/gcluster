@@ -1,7 +1,7 @@
 package route
 
 import (
-	"github.com/gosrv/gcluster/gbase/glog"
+	"github.com/gosrv/gcluster/gbase/gl"
 	"github.com/gosrv/gcluster/gbase/gproto"
 )
 
@@ -32,7 +32,7 @@ func (this *routeMap) Connect(key interface{}, processor gproto.FProcessor) {
 	}
 	oldRoutes := this.routes[key]
 	if this.single && len(oldRoutes) > 0 {
-		glog.Panic("duplicate route key %v connect", key)
+		gl.Panic("duplicate route key %v connect", key)
 	}
 	if len(oldRoutes) == 0 {
 		this.keys = append(this.keys, key)
@@ -58,7 +58,7 @@ func (this *routeMap) Trigger(from interface{}, key interface{}, val interface{}
 	} else if this.routeDefault != nil {
 		return this.routeDefault(from, key, val)
 	} else if this.showNoRouteWarn {
-		glog.Debug("no route for key %v", key)
+		gl.Debug("no route for key %v", key)
 	}
 	return nil
 }

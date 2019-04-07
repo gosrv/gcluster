@@ -2,7 +2,7 @@ package gredis
 
 import (
 	"github.com/go-redis/redis"
-	"github.com/gosrv/gcluster/gbase/glog"
+	"github.com/gosrv/gcluster/gbase/gl"
 	"github.com/gosrv/goioc"
 	"github.com/gosrv/goioc/util"
 	"net/url"
@@ -29,6 +29,8 @@ type AutoConfigReids struct {
 	domain       string
 }
 
+var _ gioc.ITagProcessor = (*AutoConfigReids)(nil)
+
 func (this *AutoConfigReids) TagProcessorName() string {
 	return this.tagProcessor.TagProcessorName()
 }
@@ -45,10 +47,7 @@ func NewAutoConfigReids(cfgBase, domain string) *AutoConfigReids {
 	}
 }
 
-func (this *AutoConfigReids) BeanAfterTagProcess(tagProcessor gioc.ITagProcessor, beanContainer gioc.IBeanContainer) {
-	if tagProcessor.TagProcessorName() != gioc.ConfigTagProcessor {
-		return
-	}
+func (this *AutoConfigReids) PrepareProcess() {
 	util.Assert(this.IRedisDriver == nil, "")
 
 	initNum := 0
@@ -62,15 +61,15 @@ func (this *AutoConfigReids) BeanAfterTagProcess(tagProcessor gioc.ITagProcessor
 		initNum++
 	}
 	if initNum != 1 {
-		glog.Panic("redis config init ambiguous")
+		gl.Panic("redis config init ambiguous")
 	}
 	if len(this.url) > 0 {
 		redisUrl, err := url.Parse(this.url)
 		if err != nil {
-			glog.Panic("redis url [%v] parse error %v", this.url, err)
+			gl.Panic("redis url [%v] parse error %v", this.url, err)
 		}
 		if len(redisUrl.Host) == 0 {
-			glog.Panic("redis url [%v] no server host find", this.url)
+			gl.Panic("redis url [%v] no server host find", this.url)
 		}
 		queryCluster := redisUrl.Query()["cluster"]
 		hosts := strings.Split(redisUrl.Host, ",")

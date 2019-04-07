@@ -20,7 +20,7 @@ func (this *Buffer) Fill(reader io.Reader) (int, error) {
 	}
 
 	n, err := reader.Read(this.buf[this.writePos:])
-	if err == nil {
+	if n > 0 {
 		this.writePos += n
 		this.totalWrite += n
 	}

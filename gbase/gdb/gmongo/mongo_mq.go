@@ -2,7 +2,7 @@ package gmongo
 
 import (
 	"github.com/globalsign/mgo"
-	"github.com/gosrv/gcluster/gbase/glog"
+	"github.com/gosrv/gcluster/gbase/gl"
 )
 
 type MongoMessageQueue struct {
@@ -15,12 +15,12 @@ func NewMongoMessageQueue(queue string, session *mgo.Session) *MongoMessageQueue
 }
 
 func (this *MongoMessageQueue) Pop(num int) []string {
-	glog.Panic("not implement")
+	gl.Panic("not implement")
 	return nil
 }
 
 func (this *MongoMessageQueue) Push(msg string) bool {
-	glog.Panic("not implement")
+	gl.Panic("not implement")
 	return false
 }
 

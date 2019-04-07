@@ -5,7 +5,7 @@ import (
 	"github.com/gosrv/gcluster/gbase/ghttp"
 	"github.com/gosrv/gcluster/gbase/gnet"
 	"github.com/gosrv/gcluster/gcluster/common/entity"
-	"github.com/sirupsen/logrus"
+	"github.com/gosrv/glog"
 )
 
 const (
@@ -19,8 +19,8 @@ const (
 type controllerLogin struct {
 	// 控制器标记
 	ghttp.IHttpController
-	log          *logrus.Logger `log:"app"`
-	serviceLogin *serviceLogin  `bean:""`
+	log          glog.IFieldLogger `log:"app"`
+	serviceLogin *serviceLogin     `bean:""`
 }
 
 func NewControllerLogin() *controllerLogin {

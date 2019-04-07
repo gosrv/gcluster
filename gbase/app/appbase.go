@@ -3,7 +3,7 @@ package app
 import (
 	"github.com/globalsign/mgo/bson"
 	"github.com/gosrv/gcluster/gbase/controller"
-	"github.com/gosrv/gcluster/gbase/glog"
+	"github.com/gosrv/gcluster/gbase/gl"
 	"github.com/gosrv/goioc"
 	"github.com/gosrv/goioc/util"
 	"github.com/urfave/cli"
@@ -127,7 +127,7 @@ func (this *Application) InitBaseBeanBuilder(builder gioc.IBeanContainerBuilder,
 	// cfg tag处理器
 	builder.AddBean(gioc.NewConfigValueTagProcessor(configLoader))
 	// log tag处理器
-	builder.AddBean(glog.NewAutoConfigLog("pcluster.log", ""))
+	builder.AddBean(gl.NewAutoConfigLog("pcluster.log", ""))
 	// 控制器
 	builder.AddBean(controller.NewBeanControlPointGroupMgr())
 	// bean init

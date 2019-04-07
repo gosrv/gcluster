@@ -3,7 +3,7 @@ package wsnet
 import (
 	"errors"
 	"github.com/gorilla/websocket"
-	"github.com/gosrv/gcluster/gbase/glog"
+	"github.com/gosrv/gcluster/gbase/gl"
 	"github.com/gosrv/gcluster/gbase/gnet"
 	"github.com/gosrv/gcluster/gbase/gproto"
 	"github.com/gosrv/gcluster/gbase/gutil"
@@ -108,7 +108,7 @@ func (this *netSystem) goWriteProcess(netChannel *wsNetChannel) error {
 func (this *netSystem) wsStart(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		glog.Warn("ws upgrade error %v", err)
+		gl.Warn("ws upgrade error %v", err)
 		return
 	}
 	netChannel := NewWsNetChannel(conn, this.config.WriteChannelSize,
@@ -140,7 +140,7 @@ func GoStartWsServer(host string, wsentry string, msgType string,
 	case MsgTypeBinary:
 		mt = websocket.BinaryMessage
 	default:
-		glog.Panic("unknown websocket msg type")
+		gl.Panic("unknown websocket msg type")
 		return nil
 	}
 	net := &netSystem{
@@ -156,7 +156,7 @@ func GoStartWsServer(host string, wsentry string, msgType string,
 		})
 		err := http.ListenAndServe(host, handler)
 		if err != nil {
-			glog.Panic("start websocket error %v", err)
+			gl.Panic("start websocket error %v", err)
 		}
 	})
 	return nil

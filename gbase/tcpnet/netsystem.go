@@ -22,9 +22,6 @@ func readProcess(netChannel *netChannel, config *gnet.NetConfig) error {
 	buf := gutil.NewBuffer(config.ReadBufSize)
 	for netChannel.IsActive() {
 		_, err := buf.Fill(netChannel.conn)
-		if err != nil {
-			return err
-		}
 		// 解析并处理所有的数据包
 		for {
 			netMsg := decoder.Decode(buf)
@@ -33,6 +30,9 @@ func readProcess(netChannel *netChannel, config *gnet.NetConfig) error {
 			}
 			// 交由写线程处理
 			netChannel.msgUnprocessedChannel <- netMsg
+		}
+		if err != nil {
+			return err
 		}
 	}
 	return nil

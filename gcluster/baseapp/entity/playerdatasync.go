@@ -4,7 +4,7 @@ import (
 	"github.com/golang/protobuf/proto"
 	"github.com/gosrv/gcluster/gbase/datasync"
 	"github.com/gosrv/gcluster/gbase/gdb"
-	"github.com/gosrv/gcluster/gbase/glog"
+	"github.com/gosrv/gcluster/gbase/gl"
 	"github.com/gosrv/gcluster/gbase/gproto"
 	"time"
 )
@@ -97,13 +97,13 @@ func (this *PlayerDataSync) TrySyncDirtyData(flushdb bool) {
 		this.clearDBDataDirty()
 		bindata, err := proto.Marshal(this.data.ToProto())
 		if err != nil {
-			glog.Panic("save player data error %v", err)
+			gl.Panic("save player data error %v", err)
 		}
 		this.dataSaver.SaveDepth(string(bindata), 0)
 		if this.dataExpireable != nil {
 			err = this.dataExpireable.SetExpireDuration(7 * 24 * time.Hour)
 			if err != nil {
-				glog.Warn("set cache data expire duration failed")
+				gl.Warn("set cache data expire duration failed")
 			}
 		}
 	}
@@ -113,7 +113,7 @@ func (this *PlayerDataSync) TrySyncDirtyData(flushdb bool) {
 		this.preFlushCacheTime = 0
 		bindata, err := proto.Marshal(this.data.ToProto())
 		if err != nil {
-			glog.Panic("save player data error %v", err)
+			gl.Panic("save player data error %v", err)
 		}
 		this.dataSaver.SaveDepth(string(bindata), 1)
 	}

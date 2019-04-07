@@ -1,6 +1,8 @@
-package glog
+package gl
 
-import "github.com/gosrv/goioc"
+import (
+	"github.com/gosrv/glog"
+)
 
 type IGLog interface {
 	Panic(format string, v ...interface{})
@@ -9,7 +11,7 @@ type IGLog interface {
 	Info(format string, v ...interface{})
 	Debug(format string, v ...interface{})
 	Trace(format string, v ...interface{})
-	Redirect(base, name string, loader gioc.IConfigLoader) error
+	Redirect(logger glog.IFieldLogger) error
 }
 
 var GLog IGLog = &gLog{}
@@ -38,6 +40,6 @@ func Trace(format string, v ...interface{}) {
 	GLog.Trace(format, v...)
 }
 
-func Redirect(base, name string, loader gioc.IConfigLoader) error {
-	return GLog.Redirect(base, name, loader)
+func Redirect(logger glog.IFieldLogger) error {
+	return GLog.Redirect(logger)
 }

@@ -9,8 +9,8 @@ import (
 	"github.com/gosrv/gcluster/gcluster/baseapp/entity"
 	"github.com/gosrv/gcluster/gcluster/common/meta"
 	"github.com/gosrv/gcluster/gcluster/proto"
+	"github.com/gosrv/glog"
 	"github.com/gosrv/goioc/util"
-	"github.com/sirupsen/logrus"
 	"reflect"
 	"sort"
 	"strconv"
@@ -24,7 +24,7 @@ const (
 
 type PlayerMgr struct {
 	playerId2Channel sync.Map
-	log              *logrus.Logger `log:"app"`
+	log              glog.IFieldLogger `log:"app"`
 
 	messageQueueFactories   []gdb.IMessageQueueFactory     `bean:""`
 	attributeGroupFactories []gdb.IDBAttributeGroupFactory `bean:""`
@@ -66,7 +66,7 @@ func (this *PlayerMgr) GetDBDataAccessor(playerId int64) *dbaccessor.DBDataAcces
 func (this *PlayerMgr) LoadPlayerData(playerId int64, loader *gdb.TheDataLoaderChain) *entity.PlayerData {
 	val, err := loader.Load()
 	if err != nil {
-		this.log.Debugf("load player data error %v", err)
+		this.log.Debug("load player data error %v", err)
 	}
 
 	pd := entity.NewPlayerData()
@@ -76,7 +76,7 @@ func (this *PlayerMgr) LoadPlayerData(playerId int64, loader *gdb.TheDataLoaderC
 		npd := &netproto.PlayerData{}
 		err = proto.Unmarshal([]byte(val), npd)
 		if err != nil {
-			this.log.Debugf("unmarshal player data error %v", err)
+			this.log.Debug("unmarshal player data error %v", err)
 		}
 		pd.FromProto(npd)
 	}

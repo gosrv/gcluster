@@ -1,7 +1,7 @@
 package route
 
 import (
-	"github.com/gosrv/gcluster/gbase/glog"
+	"github.com/gosrv/gcluster/gbase/gl"
 	"github.com/gosrv/gcluster/gbase/gproto"
 )
 
@@ -24,7 +24,7 @@ func (this *RouteDelegate) SetDelegate(raw gproto.IRoute) {
 
 func (this *RouteDelegate) Connect(key interface{}, processor gproto.FProcessor) {
 	if !this.modifible {
-		glog.Panic("not support operation")
+		gl.Panic("not support operation")
 	} else {
 		this.raw.Connect(key, processor)
 	}

@@ -8,7 +8,7 @@ import (
 	"github.com/gosrv/gcluster/gbase/gdb/gredis"
 	"github.com/gosrv/gcluster/gbase/gutil"
 	"github.com/gosrv/gcluster/gcluster/common/entity"
-	"github.com/sirupsen/logrus"
+	"github.com/gosrv/glog"
 	"time"
 )
 
@@ -20,7 +20,7 @@ const (
 )
 
 type serviceLogin struct {
-	log           *logrus.Logger         `log:"app"`
+	log           glog.IFieldLogger      `log:"app"`
 	tokenCacheOpt *gredis.ValueOperation `redis.obj:""`
 	tabAccount    *mgo.Collection        `mongo.c:"account"`
 }
@@ -42,13 +42,13 @@ func NewLoginAccount(Account string, pw string, playerId int64) *LoginAccount {
 func (this *serviceLogin) loadTokenByAcc(account string) *entity.LoginTokenCtx {
 	tokenCache, err := this.tokenCacheOpt.Get(AccTokenPrefix + account)
 	if err != nil {
-		this.log.Debugf("load acc token %v error %v", account, err)
+		this.log.Debug("load acc token %v error %v", account, err)
 		return nil
 	}
 	tokcnIns := &entity.LoginTokenCtx{}
 	err = json.Unmarshal([]byte(tokenCache), tokcnIns)
 	if err != nil {
-		this.log.Debugf("unmarshal acc token %v:%v error %v", account, tokenCache, err)
+		this.log.Debug("unmarshal acc token %v:%v error %v", account, tokenCache, err)
 		return nil
 	}
 	return tokcnIns
@@ -57,13 +57,13 @@ func (this *serviceLogin) loadTokenByAcc(account string) *entity.LoginTokenCtx {
 func (this *serviceLogin) loadTokenByTk(token string) *entity.LoginTokenCtx {
 	tokenCache, err := this.tokenCacheOpt.Get(TokenPrefix + token)
 	if err != nil {
-		this.log.Debugf("load token %v error %v", token, err)
+		this.log.Debug("load token %v error %v", token, err)
 		return nil
 	}
 	tokcnIns := &entity.LoginTokenCtx{}
 	err = json.Unmarshal([]byte(tokenCache), tokcnIns)
 	if err != nil {
-		this.log.Debugf("unmarshal token %v:%v error %v", token, tokenCache, err)
+		this.log.Debug("unmarshal token %v:%v error %v", token, tokenCache, err)
 		return nil
 	}
 	return tokcnIns
@@ -73,11 +73,11 @@ func (this *serviceLogin) saveToken(token *entity.LoginTokenCtx) {
 	tokenCache := gutil.Json(token)
 	_, err := this.tokenCacheOpt.SetTimeout(TokenPrefix+token.Token, tokenCache, time.Second*TokenExpireTimeSeconds)
 	if err != nil {
-		this.log.Debugf("save token error %v", err)
+		this.log.Debug("save token error %v", err)
 	}
 	_, err = this.tokenCacheOpt.SetTimeout(AccTokenPrefix+token.Account, tokenCache, time.Second*TokenExpireTimeSeconds)
 	if err != nil {
-		this.log.Debugf("save acc token error %v", err)
+		this.log.Debug("save acc token error %v", err)
 	}
 }
 
@@ -113,13 +113,13 @@ func (this *serviceLogin) register(account, pw string) int64 {
 	}{}
 	_, err := this.tabAccount.Find(bson.M{gmongo.MONGO_KEY_ID: AccIdGenerator}).Apply(inc, res)
 	if err != nil {
-		this.log.Debugf("get account id error %v", err)
+		this.log.Debug("get account id error %v", err)
 		return 0
 	}
 	playerId := res.Count
 	err = this.tabAccount.Insert(NewLoginAccount(account, pw, playerId))
 	if err != nil {
-		this.log.Debugf("insert account error %v", err)
+		this.log.Debug("insert account error %v", err)
 		return 0
 	}
 	return playerId

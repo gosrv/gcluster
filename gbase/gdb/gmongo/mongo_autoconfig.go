@@ -22,6 +22,8 @@ type AutoConfigMongo struct {
 	domain       string
 }
 
+var _ gioc.ITagProcessor = (*AutoConfigMongo)(nil)
+
 func (this *AutoConfigMongo) TagProcessorName() string {
 	return this.tagProcessor.TagProcessorName()
 }
@@ -38,10 +40,7 @@ func NewAutoConfigMongo(cfgBase, domain string) *AutoConfigMongo {
 	}
 }
 
-func (this *AutoConfigMongo) BeanAfterTagProcess(tagProcessor gioc.ITagProcessor, beanContainer gioc.IBeanContainer) {
-	if tagProcessor.TagProcessorName() != gioc.ConfigTagProcessor {
-		return
-	}
+func (this *AutoConfigMongo) PrepareProcess() {
 	util.Assert(this.mongoDBDriver == nil, "")
 
 	this.mongoDBDriver = NewMongoDriver(this.domain, this.url, strings.Replace(this.appGroup, ".", "_", -1))
