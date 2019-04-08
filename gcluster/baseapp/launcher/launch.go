@@ -7,6 +7,7 @@ import (
 	"github.com/gosrv/gcluster/gbase/gdb/gredis"
 	"github.com/gosrv/gcluster/gbase/ghttp"
 	"github.com/gosrv/gcluster/gbase/gl"
+	"github.com/gosrv/gcluster/gbase/gmxdriver"
 	"github.com/gosrv/gcluster/gbase/tcpnet"
 	"github.com/gosrv/gcluster/gcluster/baseapp/controller"
 	"github.com/gosrv/gcluster/gcluster/baseapp/entity"
@@ -43,6 +44,8 @@ func initServices(builder gioc.IBeanContainerBuilder) {
 		// mongo 自动配置
 		gmongo.NewAutoConfigMongo("pcluster.mongo", ""),
 		ghttp.NewHttpServer("pcluster.http", nil),
+		gmxdriver.NewGMXDriver("/gmx"),
+		common.NewGmxAppStats(),
 		common.NewClusterNodeMgr(),
 		controller.NewControllerLogin(),
 		controller.NewControllerLogic(),

@@ -28,8 +28,8 @@ func (this *AutoConfigMongo) TagProcessorName() string {
 	return this.tagProcessor.TagProcessorName()
 }
 
-func (this *AutoConfigMongo) TagProcess(bean interface{}, field reflect.Value, tags map[string]string) {
-	this.tagProcessor.TagProcess(bean, field, tags)
+func (this *AutoConfigMongo) TagProcess(bean interface{}, fType reflect.StructField, fValue reflect.Value, tags map[string]string) {
+	this.tagProcessor.TagProcess(bean, fType, fValue, tags)
 }
 
 func NewAutoConfigMongo(cfgBase, domain string) *AutoConfigMongo {

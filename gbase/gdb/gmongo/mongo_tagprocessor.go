@@ -29,7 +29,7 @@ func (this *MongoTagProcessor) TagProcessorName() string {
 	return "mongo"
 }
 
-func (this *MongoTagProcessor) TagProcess(bean interface{}, field reflect.Value, tags map[string]string) {
+func (this *MongoTagProcessor) TagProcess(bean interface{}, fType reflect.StructField, fValue reflect.Value, tags map[string]string) {
 	mongoCol, mongoColOk := tags[MongoTag]
 	if !mongoColOk {
 		return
@@ -39,8 +39,8 @@ func (this *MongoTagProcessor) TagProcess(bean interface{}, field reflect.Value,
 	}
 	if len(mongoCol) == 0 {
 		gl.Panic("mongo tag [%v] must has a value in [%v:%v]", MongoTag,
-			reflect.TypeOf(bean), field.Type())
+			reflect.TypeOf(bean), fValue.Type())
 	}
 
-	field.Set(reflect.ValueOf(this.driver.GetCollection(mongoCol)))
+	fValue.Set(reflect.ValueOf(this.driver.GetCollection(mongoCol)))
 }

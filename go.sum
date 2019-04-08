@@ -79,6 +79,12 @@ github.com/gosrv/glog v0.0.0-20190405130153-f75ad619edf7 h1:NAvDP2OaaPfz/mKRCF+v
 github.com/gosrv/glog v0.0.0-20190405130153-f75ad619edf7/go.mod h1:qnqOptAXQqc2DQUatkltISeS+Af/D51QzwLU9RtGdn4=
 github.com/gosrv/gmx v0.0.0-20190407114224-7d073c26b757 h1:9FTfGTR5u9kdSQnZRVPhFyL2UXV+eUFDJ5d6+zKQtrU=
 github.com/gosrv/gmx v0.0.0-20190407114224-7d073c26b757/go.mod h1:KaFYMnIQeSv8HspVIyTbSKWAKFFJOGopsGRpBrqO/UI=
+github.com/gosrv/gmx v0.0.0-20190408001027-2cedab9c11a2 h1:mW6vnzy1ATqamfZxyf+THMy/1WxqZdwEbKC5uuktRAY=
+github.com/gosrv/gmx v0.0.0-20190408001027-2cedab9c11a2/go.mod h1:KaFYMnIQeSv8HspVIyTbSKWAKFFJOGopsGRpBrqO/UI=
+github.com/gosrv/gmx v0.0.0-20190408003744-c0c5bf9bf20b h1:NygEzsb7h3ZK43CDfCnOaTFitIJk7sq+/hSb4NPIijE=
+github.com/gosrv/gmx v0.0.0-20190408003744-c0c5bf9bf20b/go.mod h1:KaFYMnIQeSv8HspVIyTbSKWAKFFJOGopsGRpBrqO/UI=
+github.com/gosrv/gmx v0.0.0-20190408014506-2dad8a09ffb1 h1:aU0yCOOc1y48577wKDXENXA++zgAq3PI9gMCI8XslBM=
+github.com/gosrv/gmx v0.0.0-20190408014506-2dad8a09ffb1/go.mod h1:KaFYMnIQeSv8HspVIyTbSKWAKFFJOGopsGRpBrqO/UI=
 github.com/gosrv/goioc v0.0.0-20190328112619-e8ddf9552076 h1:ro9fNAi535ais0wqrjmoayjoIvTXU8iYUEtaelchHuU=
 github.com/gosrv/goioc v0.0.0-20190328112619-e8ddf9552076/go.mod h1:su7RF+1u6Bf9DXq9+5FvMaSW4oOVjLVDr/kv3QMAEdo=
 github.com/gosrv/goioc v0.0.0-20190328124012-55de80e79f3c h1:95+Hor+KcL0Kd/9M3zfBKIFJ2Mn0g+xvfGTDFNKrD3s=
@@ -119,6 +125,8 @@ github.com/gosrv/goioc v0.0.0-20190404153926-b4779b76263d h1:MJ+m3HwnOSkCJBurpKW
 github.com/gosrv/goioc v0.0.0-20190404153926-b4779b76263d/go.mod h1:su7RF+1u6Bf9DXq9+5FvMaSW4oOVjLVDr/kv3QMAEdo=
 github.com/gosrv/goioc v0.0.0-20190407124305-6dfd980ef628 h1:Y6P1Au6YpyeeQGZFBEeSVT3fq/Q2qhK58GXR/sIAWNY=
 github.com/gosrv/goioc v0.0.0-20190407124305-6dfd980ef628/go.mod h1:su7RF+1u6Bf9DXq9+5FvMaSW4oOVjLVDr/kv3QMAEdo=
+github.com/gosrv/goioc v0.0.0-20190408012818-7ecd66480ee9 h1:rgnpjRdIx2aRS7NqAUERnLlhaEvcRruClAmT2pBUqTE=
+github.com/gosrv/goioc v0.0.0-20190408012818-7ecd66480ee9/go.mod h1:su7RF+1u6Bf9DXq9+5FvMaSW4oOVjLVDr/kv3QMAEdo=
 github.com/gregjones/httpcache v0.0.0-20181110185634-c63ab54fda8f/go.mod h1:FecbI9+v66THATjSRHfNgh1IVFe/9kFxbXtjV0ctIMA=
 github.com/grpc-ecosystem/go-grpc-middleware v1.0.0/go.mod h1:FiyG127CGDf3tlThmgyCl78X/SZQqEOJBCDaAfeWzPs=
 github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0/go.mod h1:8NvIoxWQoOIhqOTXgfV/d3M/q6VIi02HzZEHgUlZvzk=

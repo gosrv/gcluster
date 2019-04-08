@@ -34,7 +34,7 @@ func (this *LogTagProcessor) TagProcessorName() string {
 	return "log"
 }
 
-func (this *LogTagProcessor) TagProcess(bean interface{}, field reflect.Value, tags map[string]string) {
+func (this *LogTagProcessor) TagProcess(bean interface{}, fType reflect.StructField, fValue reflect.Value, tags map[string]string) {
 	logName, logOk := tags[LogTag]
 	if !logOk {
 		return
@@ -47,5 +47,5 @@ func (this *LogTagProcessor) TagProcess(bean interface{}, field reflect.Value, t
 	if logger == nil {
 		util.Panic("logger %v:%v not exist", this.domain, logName)
 	}
-	field.Set(reflect.ValueOf(logger))
+	fValue.Set(reflect.ValueOf(logger))
 }

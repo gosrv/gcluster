@@ -33,6 +33,6 @@ func (this *AutoConfigLog) TagProcessorName() string {
 	return this.tagProcessor.TagProcessorName()
 }
 
-func (this *AutoConfigLog) TagProcess(bean interface{}, field reflect.Value, tags map[string]string) {
-	this.tagProcessor.TagProcess(bean, field, tags)
+func (this *AutoConfigLog) TagProcess(bean interface{}, fType reflect.StructField, fValue reflect.Value, tags map[string]string) {
+	this.tagProcessor.TagProcess(bean, fType, fValue, tags)
 }

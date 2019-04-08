@@ -35,8 +35,8 @@ func (this *AutoConfigReids) TagProcessorName() string {
 	return this.tagProcessor.TagProcessorName()
 }
 
-func (this *AutoConfigReids) TagProcess(bean interface{}, field reflect.Value, tags map[string]string) {
-	this.tagProcessor.TagProcess(bean, field, tags)
+func (this *AutoConfigReids) TagProcess(bean interface{}, fType reflect.StructField, fValue reflect.Value, tags map[string]string) {
+	this.tagProcessor.TagProcess(bean, fType, fValue, tags)
 }
 
 func NewAutoConfigReids(cfgBase, domain string) *AutoConfigReids {

@@ -67,7 +67,7 @@ func (this *redisTagProcessor) TagProcessorName() string {
 	return "redis"
 }
 
-func (this *redisTagProcessor) TagProcess(bean interface{}, field reflect.Value, tags map[string]string) {
+func (this *redisTagProcessor) TagProcess(bean interface{}, fType reflect.StructField, fValue reflect.Value, tags map[string]string) {
 	redisObjName, redisObjNameOk := tags[RedisObjTag]
 	if !redisObjNameOk {
 		return
@@ -79,18 +79,18 @@ func (this *redisTagProcessor) TagProcess(bean interface{}, field reflect.Value,
 	var redisObj interface{}
 	if len(redisObjName) > 0 {
 		// bound redis object
-		maker, ok := this.boundRedisObjMaker[field.Type()]
+		maker, ok := this.boundRedisObjMaker[fValue.Type()]
 		if !ok {
-			gl.Panic("can not find bound redis object type %v with name %v, in bean %v", field.Type(),
+			gl.Panic("can not find bound redis object type %v with name %v, in bean %v", fValue.Type(),
 				redisObjName, reflect.TypeOf(bean))
 			return
 		}
 		redisObj = maker(redisObjName)
 	} else {
 		// unbound redis object
-		maker, ok := this.unboundRedisObjMaker[field.Type()]
+		maker, ok := this.unboundRedisObjMaker[fValue.Type()]
 		if !ok {
-			gl.Panic("can not find unbound redis object type %v, in bean %v", field.Type(),
+			gl.Panic("can not find unbound redis object type %v, in bean %v", fValue.Type(),
 				redisObjName, reflect.TypeOf(bean))
 			return
 		}
@@ -98,10 +98,10 @@ func (this *redisTagProcessor) TagProcess(bean interface{}, field reflect.Value,
 	}
 
 	if redisObj == nil {
-		gl.Panic("make redis object type %v with name %v, in bean %v failed", field.Type(),
+		gl.Panic("make redis object type %v with name %v, in bean %v failed", fValue.Type(),
 			redisObjName, reflect.TypeOf(bean))
 		return
 	}
 
-	field.Set(reflect.ValueOf(redisObj))
+	fValue.Set(reflect.ValueOf(redisObj))
 }
