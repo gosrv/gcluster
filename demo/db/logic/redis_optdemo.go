@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"github.com/gosrv/gcluster/gbase/gdb/gredis"
+	"github.com/gosrv/gbase/gdb/gredis"
 	"github.com/gosrv/goioc"
 )
 

@@ -2,10 +2,10 @@ package main
 
 import (
 	"github.com/gosrv/gcluster/demo/db/logic"
-	"github.com/gosrv/gcluster/gbase/app"
-	"github.com/gosrv/gcluster/gbase/gdb/gleveldb"
-	"github.com/gosrv/gcluster/gbase/gdb/gmongo"
-	"github.com/gosrv/gcluster/gbase/gdb/gredis"
+	"github.com/gosrv/gbase/app"
+	"github.com/gosrv/gbase/gdb/gleveldb"
+	"github.com/gosrv/gbase/gdb/gmongo"
+	"github.com/gosrv/gbase/gdb/gredis"
 	"github.com/gosrv/goioc"
 )
 

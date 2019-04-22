@@ -1,10 +1,10 @@
 package entity
 
 import (
-	"github.com/gosrv/gcluster/gbase/gl"
-	"github.com/gosrv/gcluster/gbase/gnet"
-	"github.com/gosrv/gcluster/gbase/gproto"
-	"github.com/gosrv/gcluster/gbase/gutil"
+	"github.com/gosrv/gbase/gl"
+	"github.com/gosrv/gbase/gnet"
+	"github.com/gosrv/gbase/gproto"
+	"github.com/gosrv/gbase/gutil"
 	"reflect"
 )
 

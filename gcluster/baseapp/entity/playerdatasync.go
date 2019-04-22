@@ -2,10 +2,10 @@ package entity
 
 import (
 	"github.com/golang/protobuf/proto"
-	"github.com/gosrv/gcluster/gbase/datasync"
-	"github.com/gosrv/gcluster/gbase/gdb"
-	"github.com/gosrv/gcluster/gbase/gl"
-	"github.com/gosrv/gcluster/gbase/gproto"
+	"github.com/gosrv/gbase/datasync"
+	"github.com/gosrv/gbase/gdb"
+	"github.com/gosrv/gbase/gl"
+	"github.com/gosrv/gbase/gproto"
 	"time"
 )
 

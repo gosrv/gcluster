@@ -2,8 +2,8 @@ package logic
 
 import (
 	"github.com/globalsign/mgo/bson"
-	"github.com/gosrv/gcluster/gbase/ghttp"
-	"github.com/gosrv/gcluster/gbase/gnet"
+	"github.com/gosrv/gbase/ghttp"
+	"github.com/gosrv/gbase/gnet"
 	"github.com/gosrv/gcluster/gcluster/common/entity"
 	"github.com/gosrv/glog"
 )

@@ -75,6 +75,8 @@ github.com/gorilla/mux v1.6.2/go.mod h1:1lud6UwP+6orDFRuTfBEV8e9/aOM/c4fVVCaMa2z
 github.com/gorilla/websocket v0.0.0-20170926233335-4201258b820c/go.mod h1:E7qHFY5m1UJ88s3WnNqhKjPHQ0heANvMoAMk2YaljkQ=
 github.com/gorilla/websocket v1.4.0 h1:WDFjx/TMzVgy9VdMMQi2K2Emtwi2QcUQsztZ/zLaH/Q=
 github.com/gorilla/websocket v1.4.0/go.mod h1:E7qHFY5m1UJ88s3WnNqhKjPHQ0heANvMoAMk2YaljkQ=
+github.com/gosrv/gbase v0.0.0-20190422130755-cfa56e047c6e h1:hKr9kVXlKaI5Uo5XyW5gF1PrcfeTICDoq+wfDUEeILo=
+github.com/gosrv/gbase v0.0.0-20190422130755-cfa56e047c6e/go.mod h1:iHV/sPogs9FJsFlREAwTnw6MlNMCTAE9ZtNU/Sn2z5U=
 github.com/gosrv/glog v0.0.0-20190405130153-f75ad619edf7 h1:NAvDP2OaaPfz/mKRCF+v28Xg37hYUjnmVX6jd4RPbv8=
 github.com/gosrv/glog v0.0.0-20190405130153-f75ad619edf7/go.mod h1:qnqOptAXQqc2DQUatkltISeS+Af/D51QzwLU9RtGdn4=
 github.com/gosrv/gmx v0.0.0-20190407114224-7d073c26b757 h1:9FTfGTR5u9kdSQnZRVPhFyL2UXV+eUFDJ5d6+zKQtrU=

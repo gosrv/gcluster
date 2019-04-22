@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/gosrv/gcluster/gbase/gnet"
-	"github.com/gosrv/gcluster/gbase/tcpnet"
+	"github.com/gosrv/gbase/gnet"
+	"github.com/gosrv/gbase/tcpnet"
 	"github.com/gosrv/gcluster/gcluster/baseapp/entity"
 	"reflect"
 )

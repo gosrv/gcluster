@@ -1,8 +1,8 @@
 package ctl
 
 import (
-	"github.com/gosrv/gcluster/gbase/ghttp"
-	"github.com/gosrv/gcluster/gbase/gnet"
+	"github.com/gosrv/gbase/ghttp"
+	"github.com/gosrv/gbase/gnet"
 	"net/http"
 )
 

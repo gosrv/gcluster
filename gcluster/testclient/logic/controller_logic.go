@@ -1,8 +1,8 @@
 package logic
 
 import (
-	"github.com/gosrv/gcluster/gbase/controller"
-	"github.com/gosrv/gcluster/gbase/gnet"
+	"github.com/gosrv/gbase/controller"
+	"github.com/gosrv/gbase/gnet"
 	"github.com/gosrv/gcluster/gcluster/baseapp/entity"
 	"github.com/gosrv/gcluster/gcluster/proto"
 	"github.com/gosrv/glog"

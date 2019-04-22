@@ -3,7 +3,7 @@ package logic
 import (
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
-	"github.com/gosrv/gcluster/gbase/gdb/gmongo"
+	"github.com/gosrv/gbase/gdb/gmongo"
 	"github.com/gosrv/goioc"
 )
 

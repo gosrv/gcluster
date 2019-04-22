@@ -3,9 +3,9 @@ package controller
 import (
 	"encoding/json"
 	"github.com/golang/protobuf/proto"
-	"github.com/gosrv/gcluster/gbase/controller"
-	"github.com/gosrv/gcluster/gbase/gnet"
-	"github.com/gosrv/gcluster/gbase/gproto"
+	"github.com/gosrv/gbase/controller"
+	"github.com/gosrv/gbase/gnet"
+	"github.com/gosrv/gbase/gproto"
 	"github.com/gosrv/gcluster/gcluster/baseapp/service"
 	"github.com/gosrv/gcluster/gcluster/proto"
 	"io/ioutil"

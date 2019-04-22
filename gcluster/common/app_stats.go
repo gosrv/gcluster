@@ -2,7 +2,7 @@ package common
 
 import (
 	"encoding/json"
-	"github.com/gosrv/gcluster/gbase/app"
+	"github.com/gosrv/gbase/app"
 	"github.com/gosrv/gmx"
 	"github.com/gosrv/goioc/util"
 )

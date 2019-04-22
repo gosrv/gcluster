@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"github.com/gosrv/gcluster/gbase/gdb/gleveldb"
+	"github.com/gosrv/gbase/gdb/gleveldb"
 	"github.com/gosrv/goioc"
 	"github.com/gosrv/goioc/util"
 )

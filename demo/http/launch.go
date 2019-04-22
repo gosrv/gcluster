@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/gosrv/gcluster/demo/http/ctl"
-	"github.com/gosrv/gcluster/gbase/app"
-	"github.com/gosrv/gcluster/gbase/ghttp"
+	"github.com/gosrv/gbase/app"
+	"github.com/gosrv/gbase/ghttp"
 	"github.com/gosrv/goioc"
 )
 

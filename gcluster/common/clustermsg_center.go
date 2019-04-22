@@ -1,8 +1,8 @@
 package common
 
 import (
-	"github.com/gosrv/gcluster/gbase/gdb/gredis"
-	"github.com/gosrv/gcluster/gbase/gproto"
+	"github.com/gosrv/gbase/gdb/gredis"
+	"github.com/gosrv/gbase/gproto"
 	"github.com/gosrv/gcluster/gcluster/common/meta"
 	"strconv"
 	"time"

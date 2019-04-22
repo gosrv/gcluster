@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/gosrv/gcluster/gbase/app"
-	"github.com/gosrv/gcluster/gbase/codec"
-	"github.com/gosrv/gcluster/gbase/gl"
-	"github.com/gosrv/gcluster/gbase/tcpnet"
+	"github.com/gosrv/gbase/app"
+	"github.com/gosrv/gbase/codec"
+	"github.com/gosrv/gbase/gl"
+	"github.com/gosrv/gbase/tcpnet"
 	"github.com/gosrv/gcluster/gcluster/baseapp/entity"
 	"github.com/gosrv/gcluster/gcluster/testclient/logic"
 	"github.com/gosrv/glog"

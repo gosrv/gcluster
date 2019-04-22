@@ -1,9 +1,9 @@
 package service
 
 import (
-	"github.com/gosrv/gcluster/gbase/gnet"
-	"github.com/gosrv/gcluster/gbase/gproto"
-	"github.com/gosrv/gcluster/gbase/gutil"
+	"github.com/gosrv/gbase/gnet"
+	"github.com/gosrv/gbase/gproto"
+	"github.com/gosrv/gbase/gutil"
 	"github.com/gosrv/gcluster/gcluster/baseapp/entity"
 	"github.com/gosrv/gcluster/gcluster/common"
 	"github.com/gosrv/goioc/util"

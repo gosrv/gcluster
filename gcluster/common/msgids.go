@@ -2,7 +2,7 @@ package common
 
 import (
 	"github.com/golang/protobuf/proto"
-	"github.com/gosrv/gcluster/gbase/gnet"
+	"github.com/gosrv/gbase/gnet"
 	"github.com/gosrv/gcluster/gcluster/proto"
 	"github.com/gosrv/goioc/util"
 	"reflect"
