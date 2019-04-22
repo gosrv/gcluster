@@ -21,7 +21,7 @@ const (
 
 type serviceLogin struct {
 	log           glog.IFieldLogger      `log:"app"`
-	tokenCacheOpt *gredis.ValueOperation `redis.obj:""`
+	tokenCacheOpt *gredis.ValueOperation `redis:""`
 	tabAccount    *mgo.Collection        `mongo.c:"account"`
 }
 

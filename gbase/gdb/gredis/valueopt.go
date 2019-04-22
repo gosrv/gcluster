@@ -25,13 +25,13 @@ func (this *ValueOperation) Expire(key string, duration time.Duration) (bool, er
 func (this *ValueOperation) SetTimeout(key string, value string, timeout time.Duration) (string, error) {
 	return this.cmdable.Set(this.wrapKeyFunc(key), value, timeout).Result()
 }
-func (this *ValueOperation) SetIfAbsent(key string, value string) (bool, error) {
+func (this *ValueOperation) SetNX(key string, value string) (bool, error) {
 	return this.cmdable.SetNX(this.wrapKeyFunc(key), value, 0).Result()
 }
-func (this *ValueOperation) SetIfAbsentTimeout(key string, value string, timeout time.Duration) (bool, error) {
+func (this *ValueOperation) SetNXTimeout(key string, value string, timeout time.Duration) (bool, error) {
 	return this.cmdable.SetNX(this.wrapKeyFunc(key), value, timeout).Result()
 }
-func (this *ValueOperation) MultiSet(kvalues map[string]string) (string, error) {
+func (this *ValueOperation) MSet(kvalues map[string]string) (string, error) {
 	pairs := make([]interface{}, len(kvalues)*2, len(kvalues)*2)
 	idx := 0
 	for k, v := range kvalues {
@@ -41,7 +41,7 @@ func (this *ValueOperation) MultiSet(kvalues map[string]string) (string, error) 
 	}
 	return this.cmdable.MSet(pairs...).Result()
 }
-func (this *ValueOperation) MultiSetIfAbsent(kvalues map[string]string) (bool, error) {
+func (this *ValueOperation) MSetNX(kvalues map[string]string) (bool, error) {
 	pairs := make([]interface{}, len(kvalues)*2, len(kvalues)*2)
 	idx := 0
 	for k, v := range kvalues {
@@ -54,10 +54,10 @@ func (this *ValueOperation) MultiSetIfAbsent(kvalues map[string]string) (bool, e
 func (this *ValueOperation) Get(key string) (string, error) {
 	return this.cmdable.Get(this.wrapKeyFunc(key)).Result()
 }
-func (this *ValueOperation) GetAndSet(key string, value string) (string, error) {
+func (this *ValueOperation) GetSet(key string, value string) (string, error) {
 	return this.cmdable.GetSet(this.wrapKeyFunc(key), value).Result()
 }
-func (this *ValueOperation) MultiGet(keys ...string) ([]string, error) {
+func (this *ValueOperation) MGet(keys ...string) ([]string, error) {
 	wkeys := make([]string, len(keys), len(keys))
 	for i := 0; i < len(keys); i++ {
 		wkeys[i] = this.wrapKeyFunc(keys[i])
@@ -72,19 +72,19 @@ func (this *ValueOperation) MultiGet(keys ...string) ([]string, error) {
 	}
 	return svals, err
 }
-func (this *ValueOperation) Increment(key string) (int64, error) {
+func (this *ValueOperation) Incr(key string) (int64, error) {
 	return this.cmdable.Incr(this.wrapKeyFunc(key)).Result()
 }
-func (this *ValueOperation) IncrementByInt(key string, delta int64) (int64, error) {
+func (this *ValueOperation) IncrBy(key string, delta int64) (int64, error) {
 	return this.cmdable.IncrBy(this.wrapKeyFunc(key), delta).Result()
 }
-func (this *ValueOperation) IncrementByFloat(key string, delta float64) (float64, error) {
+func (this *ValueOperation) IncrByFloat(key string, delta float64) (float64, error) {
 	return this.cmdable.IncrByFloat(this.wrapKeyFunc(key), delta).Result()
 }
-func (this *ValueOperation) Decrement(key string) (int64, error) {
+func (this *ValueOperation) Decr(key string) (int64, error) {
 	return this.cmdable.Decr(this.wrapKeyFunc(key)).Result()
 }
-func (this *ValueOperation) DecrementByInt(key string, delta int64) (int64, error) {
+func (this *ValueOperation) DecrBy(key string, delta int64) (int64, error) {
 	return this.cmdable.DecrBy(this.wrapKeyFunc(key), delta).Result()
 }
 func (this *ValueOperation) Append(key string, value string) (int64, error) {
@@ -96,7 +96,7 @@ func (this *ValueOperation) GetRange(key string, start int64, end int64) (string
 func (this *ValueOperation) SetRange(key string, value string, offset int64) (int64, error) {
 	return this.cmdable.SetRange(this.wrapKeyFunc(key), offset, value).Result()
 }
-func (this *ValueOperation) Size(key string) (int64, error) {
+func (this *ValueOperation) StrLen(key string) (int64, error) {
 	return this.cmdable.StrLen(this.wrapKeyFunc(key)).Result()
 }
 func (this *ValueOperation) SetBit(key string, offset int64, value int) (int64, error) {
@@ -124,33 +124,33 @@ func (this *BoundValueOperation) Expire(key string, duration time.Duration) (boo
 func (this *BoundValueOperation) SetTimeout(value string, timeout time.Duration) (string, error) {
 	return this.cmdable.Set(this.boundKey, value, timeout).Result()
 }
-func (this *BoundValueOperation) SetIfAbsent(value string) (bool, error) {
+func (this *BoundValueOperation) SetNX(value string) (bool, error) {
 	return this.cmdable.SetNX(this.boundKey, value, 0).Result()
 }
-func (this *BoundValueOperation) SetIfAbsentTimeout(value string, timeout time.Duration) (bool, error) {
+func (this *BoundValueOperation) SetNXTimeout(value string, timeout time.Duration) (bool, error) {
 	return this.cmdable.SetNX(this.boundKey, value, timeout).Result()
 }
 
 func (this *BoundValueOperation) Get() (string, error) {
 	return this.cmdable.Get(this.boundKey).Result()
 }
-func (this *BoundValueOperation) GetAndSet(value string) (string, error) {
+func (this *BoundValueOperation) GetSet(value string) (string, error) {
 	return this.cmdable.GetSet(this.boundKey, value).Result()
 }
 
-func (this *BoundValueOperation) Increment() (int64, error) {
+func (this *BoundValueOperation) Incr() (int64, error) {
 	return this.cmdable.Incr(this.boundKey).Result()
 }
-func (this *BoundValueOperation) IncrementByInt(delta int64) (int64, error) {
+func (this *BoundValueOperation) IncrBy(delta int64) (int64, error) {
 	return this.cmdable.IncrBy(this.boundKey, delta).Result()
 }
-func (this *BoundValueOperation) IncrementByFloat(delta float64) (float64, error) {
+func (this *BoundValueOperation) IncrByFloat(delta float64) (float64, error) {
 	return this.cmdable.IncrByFloat(this.boundKey, delta).Result()
 }
-func (this *BoundValueOperation) Decrement() (int64, error) {
+func (this *BoundValueOperation) Decr() (int64, error) {
 	return this.cmdable.Decr(this.boundKey).Result()
 }
-func (this *BoundValueOperation) DecrementByInt(delta int64) (int64, error) {
+func (this *BoundValueOperation) DecrBy(delta int64) (int64, error) {
 	return this.cmdable.DecrBy(this.boundKey, delta).Result()
 }
 func (this *BoundValueOperation) Append(value string) (int64, error) {
@@ -162,7 +162,7 @@ func (this *BoundValueOperation) GetRange(start int64, end int64) (string, error
 func (this *BoundValueOperation) SetRange(value string, offset int64) (int64, error) {
 	return this.cmdable.SetRange(this.boundKey, offset, value).Result()
 }
-func (this *BoundValueOperation) Size() (int64, error) {
+func (this *BoundValueOperation) StrLen() (int64, error) {
 	return this.cmdable.StrLen(this.boundKey).Result()
 }
 func (this *BoundValueOperation) SetBit(offset int64, value int) (int64, error) {

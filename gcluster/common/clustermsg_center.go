@@ -9,7 +9,7 @@ import (
 )
 
 type ClusterMsgCenter struct {
-	msgListOpt *gredis.ListOperation `redis.obj:""`
+	msgListOpt *gredis.ListOperation `redis:""`
 	encoder    gproto.IEncoder
 	decoder    gproto.IDecoder
 }
@@ -38,12 +38,12 @@ func (this *ClusterMsgCenter) BlockProcessBundleMsg(id int64, processor gproto.I
 
 func (this *ClusterMsgCenter) blockProcessMsg(mqName string, processor gproto.IMsgProcessor) {
 	for {
-		vals, _ := this.msgListOpt.BLeftPop(time.Minute, mqName)
+		vals, _ := this.msgListOpt.BLPop(time.Minute, mqName)
 		for _, val := range vals {
 			msg := this.decoder.Decode(val)
 			processed := processor.ProcessMsg(msg)
 			if !processed {
-				this.msgListOpt.LeftPush(mqName, val)
+				this.msgListOpt.LPush(mqName, val)
 				return
 			}
 		}
@@ -59,6 +59,6 @@ func (this *ClusterMsgCenter) SendToBundle(bundleId int64, msg interface{}) erro
 }
 
 func (this *ClusterMsgCenter) sendToTarget(target string, msg interface{}) error {
-	_, err := this.msgListOpt.RightPush(target, this.encoder.Encode(msg))
+	_, err := this.msgListOpt.RPush(target, this.encoder.Encode(msg))
 	return err
 }

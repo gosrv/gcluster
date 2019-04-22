@@ -2,12 +2,14 @@ package main
 
 import (
 	"github.com/gosrv/gcluster/gbase/app"
+	"github.com/gosrv/gcluster/gbase/cluster"
 	"github.com/gosrv/gcluster/gbase/codec"
 	"github.com/gosrv/gcluster/gbase/gdb/gmongo"
 	"github.com/gosrv/gcluster/gbase/gdb/gredis"
 	"github.com/gosrv/gcluster/gbase/ghttp"
 	"github.com/gosrv/gcluster/gbase/gl"
 	"github.com/gosrv/gcluster/gbase/gmxdriver"
+	"github.com/gosrv/gcluster/gbase/route"
 	"github.com/gosrv/gcluster/gbase/tcpnet"
 	"github.com/gosrv/gcluster/gcluster/baseapp/controller"
 	"github.com/gosrv/gcluster/gcluster/baseapp/entity"
@@ -21,7 +23,7 @@ import (
 // 客户端网络出了
 func initBaseNet(builder gioc.IBeanContainerBuilder) {
 	// pb消息编解码器，4字节长度 + 2字节proto id + proto
-	idtype := entity.NewLogicMsgIds()
+	idtype := common.LogicMsgIds
 	encoder := codec.NewNetMsgFixLenProtobufEncoder(idtype)
 	decoder := codec.NewNetMsgFixLenProtobufDecoder(idtype)
 	// 创建网络模块，这里使用了数据自动同步路由器AutoSyncDataRoute
@@ -31,13 +33,18 @@ func initBaseNet(builder gioc.IBeanContainerBuilder) {
 }
 
 func initClusterMsgCenter(builder gioc.IBeanContainerBuilder) {
-	idtype := entity.NewLogicMsgIds()
+	idtype := common.ClusterMsgIds
 	encoder := codec.NewIdProtobufEncoder(idtype)
 	decoder := codec.NewIdProtobufDecoder(idtype)
 	builder.AddBean(common.NewClusterMsgCenter(encoder, decoder))
 }
 
 func initServices(builder gioc.IBeanContainerBuilder) {
+	redisNodeMgr := cluster.NewRedisNodeMgr()
+	encoder := codec.NewIdProtobufEncoder(common.ClusterMsgIds)
+	decoder := codec.NewIdProtobufDecoder(common.ClusterMsgIds)
+	redisNodeMq := cluster.NewRedisNodeMQ(redisNodeMgr, encoder, decoder, route.NewRouteMap(true, false))
+
 	builder.AddBean(
 		// redis 自动配置
 		gredis.NewAutoConfigReids("pcluster.redis", ""),
@@ -46,7 +53,10 @@ func initServices(builder gioc.IBeanContainerBuilder) {
 		ghttp.NewHttpServer("pcluster.http", nil),
 		gmxdriver.NewGMXDriver("/gmx"),
 		common.NewGmxAppStats(),
-		common.NewClusterNodeMgr(),
+		redisNodeMgr,
+		redisNodeMq,
+		cluster.NewNodeMgr(redisNodeMgr),
+		cluster.NewNodeMQ(redisNodeMq),
 		controller.NewControllerLogin(),
 		controller.NewControllerLogic(),
 		service.NewPlayerMgr(),

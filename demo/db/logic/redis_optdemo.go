@@ -14,21 +14,21 @@ type serviceRedisOptDemo struct {
 	// 这是为了使多个不同的服务集群共享一个redis实例
 	// 注入使用过标签redis.obj实现的，绑定对象还可以进一步指定特定的key
 	// key - value对象的注入
-	valueOperation *gredis.ValueOperation `redis.obj:""`
+	valueOperation *gredis.ValueOperation `redis:""`
 	// 绑定对象和非绑定对象的区别是，绑定对象的函数里不用再含有key，他就是针对特定key的操作
-	boundValueOperation *gredis.BoundValueOperation `redis.obj:"test.boundval"`
+	boundValueOperation *gredis.BoundValueOperation `redis:"test.boundval"`
 	// hashmap对象的注入
-	hashOperation      *gredis.HashOperation      `redis.obj:""`
-	boundHashOperation *gredis.BoundHashOperation `redis.obj:"test.boundhash"`
+	hashOperation      *gredis.HashOperation      `redis:""`
+	boundHashOperation *gredis.BoundHashOperation `redis:"test.boundhash"`
 	// list对象的注入
-	listOperation      *gredis.ListOperation      `redis.obj:""`
-	boundListOperation *gredis.BoundListOperation `redis.obj:"test.boundlist"`
+	listOperation      *gredis.ListOperation      `redis:""`
+	boundListOperation *gredis.BoundListOperation `redis:"test.boundlist"`
 	// set对象的注入
-	setOperation      *gredis.SetOperation      `redis.obj:""`
-	boundSetOperation *gredis.BoundSetOperation `redis.obj:"test.boundset"`
+	setOperation      *gredis.SetOperation      `redis:""`
+	boundSetOperation *gredis.BoundSetOperation `redis:"test.boundset"`
 	// zset对象的注入
-	zsetOperation      *gredis.ZSetOperation      `redis.obj:""`
-	boundZSetOperation *gredis.BoundZSetOperation `redis.obj:"test.boundzset"`
+	zsetOperation      *gredis.ZSetOperation      `redis:""`
+	boundZSetOperation *gredis.BoundZSetOperation `redis:"test.boundzset"`
 	// 原始redis驱动的注入
 	redisDriver gredis.IRedisDriver `bean`
 }

@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	RedisObjTag = "redis.obj"
+	RedisObjTag = "redis"
 	RedisDomain = "redis.domain"
 )
 

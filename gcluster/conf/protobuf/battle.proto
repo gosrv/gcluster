@@ -6,10 +6,10 @@ syntax = "proto3";
 package netproto;
 
 // 心跳
-message CSB_Tick {
+message BCS_Tick {
 }
 
-message SCB_Tick {
+message BSC_Tick {
 }
 
 message BCS_None{}

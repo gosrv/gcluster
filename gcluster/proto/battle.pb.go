@@ -42,69 +42,69 @@ func (x EBMsgIds) String() string {
 	return proto.EnumName(EBMsgIds_name, int32(x))
 }
 func (EBMsgIds) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_battle_c5b74b6cccadc04c, []int{0}
+	return fileDescriptor_battle_90f3ea8b54fb0778, []int{0}
 }
 
 // 心跳
-type CSB_Tick struct {
+type BCS_Tick struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CSB_Tick) Reset()         { *m = CSB_Tick{} }
-func (m *CSB_Tick) String() string { return proto.CompactTextString(m) }
-func (*CSB_Tick) ProtoMessage()    {}
-func (*CSB_Tick) Descriptor() ([]byte, []int) {
-	return fileDescriptor_battle_c5b74b6cccadc04c, []int{0}
+func (m *BCS_Tick) Reset()         { *m = BCS_Tick{} }
+func (m *BCS_Tick) String() string { return proto.CompactTextString(m) }
+func (*BCS_Tick) ProtoMessage()    {}
+func (*BCS_Tick) Descriptor() ([]byte, []int) {
+	return fileDescriptor_battle_90f3ea8b54fb0778, []int{0}
 }
-func (m *CSB_Tick) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_CSB_Tick.Unmarshal(m, b)
+func (m *BCS_Tick) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_BCS_Tick.Unmarshal(m, b)
 }
-func (m *CSB_Tick) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_CSB_Tick.Marshal(b, m, deterministic)
+func (m *BCS_Tick) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_BCS_Tick.Marshal(b, m, deterministic)
 }
-func (dst *CSB_Tick) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CSB_Tick.Merge(dst, src)
+func (dst *BCS_Tick) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_BCS_Tick.Merge(dst, src)
 }
-func (m *CSB_Tick) XXX_Size() int {
-	return xxx_messageInfo_CSB_Tick.Size(m)
+func (m *BCS_Tick) XXX_Size() int {
+	return xxx_messageInfo_BCS_Tick.Size(m)
 }
-func (m *CSB_Tick) XXX_DiscardUnknown() {
-	xxx_messageInfo_CSB_Tick.DiscardUnknown(m)
+func (m *BCS_Tick) XXX_DiscardUnknown() {
+	xxx_messageInfo_BCS_Tick.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_CSB_Tick proto.InternalMessageInfo
+var xxx_messageInfo_BCS_Tick proto.InternalMessageInfo
 
-type SCB_Tick struct {
+type BSC_Tick struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *SCB_Tick) Reset()         { *m = SCB_Tick{} }
-func (m *SCB_Tick) String() string { return proto.CompactTextString(m) }
-func (*SCB_Tick) ProtoMessage()    {}
-func (*SCB_Tick) Descriptor() ([]byte, []int) {
-	return fileDescriptor_battle_c5b74b6cccadc04c, []int{1}
+func (m *BSC_Tick) Reset()         { *m = BSC_Tick{} }
+func (m *BSC_Tick) String() string { return proto.CompactTextString(m) }
+func (*BSC_Tick) ProtoMessage()    {}
+func (*BSC_Tick) Descriptor() ([]byte, []int) {
+	return fileDescriptor_battle_90f3ea8b54fb0778, []int{1}
 }
-func (m *SCB_Tick) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_SCB_Tick.Unmarshal(m, b)
+func (m *BSC_Tick) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_BSC_Tick.Unmarshal(m, b)
 }
-func (m *SCB_Tick) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_SCB_Tick.Marshal(b, m, deterministic)
+func (m *BSC_Tick) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_BSC_Tick.Marshal(b, m, deterministic)
 }
-func (dst *SCB_Tick) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SCB_Tick.Merge(dst, src)
+func (dst *BSC_Tick) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_BSC_Tick.Merge(dst, src)
 }
-func (m *SCB_Tick) XXX_Size() int {
-	return xxx_messageInfo_SCB_Tick.Size(m)
+func (m *BSC_Tick) XXX_Size() int {
+	return xxx_messageInfo_BSC_Tick.Size(m)
 }
-func (m *SCB_Tick) XXX_DiscardUnknown() {
-	xxx_messageInfo_SCB_Tick.DiscardUnknown(m)
+func (m *BSC_Tick) XXX_DiscardUnknown() {
+	xxx_messageInfo_BSC_Tick.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_SCB_Tick proto.InternalMessageInfo
+var xxx_messageInfo_BSC_Tick proto.InternalMessageInfo
 
 type BCS_None struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -116,7 +116,7 @@ func (m *BCS_None) Reset()         { *m = BCS_None{} }
 func (m *BCS_None) String() string { return proto.CompactTextString(m) }
 func (*BCS_None) ProtoMessage()    {}
 func (*BCS_None) Descriptor() ([]byte, []int) {
-	return fileDescriptor_battle_c5b74b6cccadc04c, []int{2}
+	return fileDescriptor_battle_90f3ea8b54fb0778, []int{2}
 }
 func (m *BCS_None) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_BCS_None.Unmarshal(m, b)
@@ -137,21 +137,21 @@ func (m *BCS_None) XXX_DiscardUnknown() {
 var xxx_messageInfo_BCS_None proto.InternalMessageInfo
 
 func init() {
-	proto.RegisterType((*CSB_Tick)(nil), "netproto.CSB_Tick")
-	proto.RegisterType((*SCB_Tick)(nil), "netproto.SCB_Tick")
+	proto.RegisterType((*BCS_Tick)(nil), "netproto.BCS_Tick")
+	proto.RegisterType((*BSC_Tick)(nil), "netproto.BSC_Tick")
 	proto.RegisterType((*BCS_None)(nil), "netproto.BCS_None")
 	proto.RegisterEnum("netproto.EBMsgIds", EBMsgIds_name, EBMsgIds_value)
 }
 
-func init() { proto.RegisterFile("battle.proto", fileDescriptor_battle_c5b74b6cccadc04c) }
+func init() { proto.RegisterFile("battle.proto", fileDescriptor_battle_90f3ea8b54fb0778) }
 
-var fileDescriptor_battle_c5b74b6cccadc04c = []byte{
-	// 109 bytes of a gzipped FileDescriptorProto
+var fileDescriptor_battle_90f3ea8b54fb0778 = []byte{
+	// 107 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x49, 0x4a, 0x2c, 0x29,
 	0xc9, 0x49, 0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0xc8, 0x4b, 0x2d, 0x01, 0xb3, 0x94,
-	0xb8, 0xb8, 0x38, 0x9c, 0x83, 0x9d, 0xe2, 0x43, 0x32, 0x93, 0xb3, 0x41, 0xec, 0x60, 0x67, 0x04,
-	0xdb, 0xc9, 0x39, 0x38, 0xde, 0x2f, 0x3f, 0x2f, 0x55, 0xcb, 0x9c, 0x8b, 0xc3, 0xd5, 0xc9, 0xb7,
-	0x38, 0xdd, 0x33, 0xa5, 0x58, 0x88, 0x97, 0x8b, 0xd3, 0x15, 0x26, 0x21, 0xc0, 0x00, 0xe7, 0x82,
-	0xf4, 0x08, 0x30, 0x42, 0xb8, 0xc1, 0xce, 0x10, 0x2e, 0x53, 0x12, 0x1b, 0xd8, 0x0e, 0x63, 0x40,
-	0x00, 0x00, 0x00, 0xff, 0xff, 0xd2, 0x06, 0xd5, 0x11, 0x7d, 0x00, 0x00, 0x00,
+	0xb8, 0xb8, 0x38, 0x9c, 0x9c, 0x83, 0xe3, 0x43, 0x32, 0x93, 0xb3, 0xc1, 0xec, 0x60, 0x67, 0x04,
+	0xdb, 0x39, 0x38, 0xde, 0x2f, 0x3f, 0x2f, 0x55, 0xcb, 0x9c, 0x8b, 0xc3, 0xd5, 0xc9, 0xb7, 0x38,
+	0xdd, 0x33, 0xa5, 0x58, 0x88, 0x97, 0x8b, 0xd3, 0x15, 0x26, 0x21, 0xc0, 0x00, 0xe7, 0x82, 0xf4,
+	0x08, 0x30, 0x42, 0xb8, 0x50, 0x23, 0x04, 0x98, 0x92, 0xd8, 0xc0, 0x76, 0x18, 0x03, 0x02, 0x00,
+	0x00, 0xff, 0xff, 0x18, 0x9a, 0x1b, 0x5a, 0x7d, 0x00, 0x00, 0x00,
 }

@@ -48,8 +48,13 @@ func (this *GMXDriver) TagProcess(bean interface{}, fType reflect.StructField, f
 		return
 	}
 	gmxOpt := tags[GmxOpt]
-	canRead := strings.Contains(gmxOpt, "r")
-	canWrite := strings.Contains(gmxOpt, "w")
+	canRead := true
+	canWrite := true
+	if len(gmxOpt) > 0 {
+		canRead = strings.Contains(gmxOpt, "r")
+		canWrite = strings.Contains(gmxOpt, "w")
+	}
+
 	for fValue.Kind() == reflect.Ptr {
 		if canWrite && fValue.IsNil() {
 			fValue.Set(reflect.New(fValue.Type().Elem()))

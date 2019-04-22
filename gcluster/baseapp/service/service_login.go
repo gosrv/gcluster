@@ -1,12 +1,12 @@
 package service
 
 import (
+	"github.com/gosrv/gcluster/gbase/cluster"
 	"github.com/gosrv/gcluster/gbase/gdb"
 	"github.com/gosrv/gcluster/gbase/gnet"
 	"github.com/gosrv/gcluster/gbase/gproto"
 	"github.com/gosrv/gcluster/gbase/tcpnet"
 	"github.com/gosrv/gcluster/gcluster/baseapp/entity"
-	"github.com/gosrv/gcluster/gcluster/common"
 	"github.com/gosrv/gcluster/gcluster/common/meta"
 	"github.com/gosrv/gcluster/gcluster/proto"
 	"github.com/gosrv/glog"
@@ -17,7 +17,8 @@ type ServiceLogin struct {
 	net                   *tcpnet.TcpNetServer   `bean:""`
 	playerMgr             *PlayerMgr             `bean:""`
 	nodeUuid              string                 `bean:""`
-	clusterNodeMgr        *common.ClusterNodeMgr `bean:""`
+	nodeMgr			      *cluster.NodeMgr		 `bean:""`
+	nodeMq				  *cluster.NodeMQ		`bean:""`
 	servicePlayerMsgQueue *ServicePlayerMsgQueue `bean:""`
 }
 
@@ -110,7 +111,7 @@ func (this *ServiceLogin) doClusterLogin(playerId int64, attributeGroup gdb.IDBA
 		return netproto.E_Code_E_RELOGIN
 	}
 
-	if !this.clusterNodeMgr.IsNodeActive(oldBaseAppUuid) {
+	if !this.nodeMgr.IsNodeActive(oldBaseAppUuid) {
 		// 服务器已死，抢先登陆
 		if attributeGroup.CasSetAttribute(meta.BaseApp, oldBaseAppUuid, this.nodeUuid) {
 			this.log.WithFields(glog.LF{"playerId": playerId}).
@@ -124,7 +125,10 @@ func (this *ServiceLogin) doClusterLogin(playerId int64, attributeGroup gdb.IDBA
 	}
 
 	// 重复登陆处理，通知踢人
-	this.clusterNodeMgr.SendMsgToNode(oldBaseAppUuid)
+	err = this.nodeMq.Push(oldBaseAppUuid, &netproto.SS_KickPlayer{PlayerId:playerId})
+	if err != nil {
+		this.log.Debug("node message error %v", err)
+	}
 	this.log.WithFields(glog.LF{"playerId": playerId}).
 		Warn("player relogin failed, kick other server player")
 	return netproto.E_Code_E_RELOGIN

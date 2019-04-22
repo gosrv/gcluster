@@ -24,15 +24,15 @@ func (this *RedisAttributeGroup) CasSetAttribute(key string, oldValue string, ne
 }
 
 func (this *RedisAttributeGroup) GetAttribute(key string) (string, error) {
-	return this.opt.Get(key)
+	return this.opt.HGet(key)
 }
 
 func (this *RedisAttributeGroup) SetAttribute(key string, value string) error {
-	_, err := this.opt.Put(key, value)
+	_, err := this.opt.HSet(key, value)
 	return err
 }
 
 func (this *RedisAttributeGroup) SetAttributes(values map[string]interface{}) error {
-	_, err := this.opt.PutAll(values)
+	_, err := this.opt.HMSet(values)
 	return err
 }

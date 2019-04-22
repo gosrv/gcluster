@@ -127,6 +127,8 @@ github.com/gosrv/goioc v0.0.0-20190407124305-6dfd980ef628 h1:Y6P1Au6YpyeeQGZFBEe
 github.com/gosrv/goioc v0.0.0-20190407124305-6dfd980ef628/go.mod h1:su7RF+1u6Bf9DXq9+5FvMaSW4oOVjLVDr/kv3QMAEdo=
 github.com/gosrv/goioc v0.0.0-20190408012818-7ecd66480ee9 h1:rgnpjRdIx2aRS7NqAUERnLlhaEvcRruClAmT2pBUqTE=
 github.com/gosrv/goioc v0.0.0-20190408012818-7ecd66480ee9/go.mod h1:su7RF+1u6Bf9DXq9+5FvMaSW4oOVjLVDr/kv3QMAEdo=
+github.com/gosrv/goioc v0.0.0-20190416114134-ce7160f8667b h1:JXeyUl5Dz8SQMk4yP8Aa0gHikO/116JA53cjX1zsrIk=
+github.com/gosrv/goioc v0.0.0-20190416114134-ce7160f8667b/go.mod h1:su7RF+1u6Bf9DXq9+5FvMaSW4oOVjLVDr/kv3QMAEdo=
 github.com/gregjones/httpcache v0.0.0-20181110185634-c63ab54fda8f/go.mod h1:FecbI9+v66THATjSRHfNgh1IVFe/9kFxbXtjV0ctIMA=
 github.com/grpc-ecosystem/go-grpc-middleware v1.0.0/go.mod h1:FiyG127CGDf3tlThmgyCl78X/SZQqEOJBCDaAfeWzPs=
 github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0/go.mod h1:8NvIoxWQoOIhqOTXgfV/d3M/q6VIi02HzZEHgUlZvzk=
@@ -215,6 +217,7 @@ github.com/pascaldekloe/goe v0.0.0-20180627143212-57f6aae5913c/go.mod h1:lzWF7FI
 github.com/pborman/uuid v1.2.0/go.mod h1:X/NO0urCmaxf9VXbdlT7C2Yzkj2IKimNn4k+gtPdI/k=
 github.com/peterbourgon/diskv v2.0.1+incompatible/go.mod h1:uqqh8zWWbv1HBMNONnaR/tNboyR3/BZd58JJSHlUSCU=
 github.com/pkg/errors v0.8.0/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
+github.com/pkg/errors v0.8.1 h1:iURUrRGxPUNPdy5/HRSm+Yj6okJ6UtLINN0Q9M4+h3I=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
