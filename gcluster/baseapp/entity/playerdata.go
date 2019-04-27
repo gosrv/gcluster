@@ -7,92 +7,6 @@ import (
 )
             
                 
-type ItemIterPlayerDatapets func(k int32, v *Pet)
-type ItemStatusIterPlayerDatapets func(k int32, v *Pet, dirty bool)
-    
-type ContainerPlayerDatapets struct {
-    _impl *datasync.DirtyContainerVector
-}
-func (this *ContainerPlayerDatapets)Get(key int32) *Pet {
-    return this._impl.Get(key).(*Pet)
-}
-func (this *ContainerPlayerDatapets)Set(key int32, value *Pet) {
-    this._impl.Set(key, value)
-}
-func (this *ContainerPlayerDatapets)Foreach(iter ItemIterPlayerDatapets) {
-    this._impl.Foreach(func(k interface{}, v interface{}) {iter(k.(int32), v.(*Pet))})
-}
-func (this *ContainerPlayerDatapets)ForeachStatus(iter ItemStatusIterPlayerDatapets) {
-    this._impl.ForeachStatus(func(k interface{}, v interface{}, dirty bool) {iter(k.(int32), v.(*Pet), dirty)})
-}
-func (this *ContainerPlayerDatapets)ForeachDirty(iter ItemIterPlayerDatapets) {
-    this._impl.ForeachDirty(func(k interface{}, v interface{}) {iter(k.(int32), v.(*Pet))})
-}
-func (this *ContainerPlayerDatapets)Size() int {
-    return this._impl.Size()
-}
-func (this *ContainerPlayerDatapets)Clear() {
-    this._impl.Clear()
-}
-
-func NewPlayerDatapetsProto(k int32, v *Pet) *netproto.PlayerDatapets {
-        return &netproto.PlayerDatapets{
-            Key:&k,
-            Val:v.ToProto(),
-        }
-}
-
-func NewPlayerDatapetsProtoDirty(k int32, v *Pet) *netproto.PlayerDatapets {
-        return &netproto.PlayerDatapets{
-            Key:&k,
-            Val:v.ToProtoDirty(),
-        }
-}
-            
-                
-type ItemIterPlayerDatapacks func(k int32, v *Pack)
-type ItemStatusIterPlayerDatapacks func(k int32, v *Pack, dirty bool)
-    
-type ContainerPlayerDatapacks struct {
-    _impl *datasync.DirtyContainerVector
-}
-func (this *ContainerPlayerDatapacks)Get(key int32) *Pack {
-    return this._impl.Get(key).(*Pack)
-}
-func (this *ContainerPlayerDatapacks)Set(key int32, value *Pack) {
-    this._impl.Set(key, value)
-}
-func (this *ContainerPlayerDatapacks)Foreach(iter ItemIterPlayerDatapacks) {
-    this._impl.Foreach(func(k interface{}, v interface{}) {iter(k.(int32), v.(*Pack))})
-}
-func (this *ContainerPlayerDatapacks)ForeachStatus(iter ItemStatusIterPlayerDatapacks) {
-    this._impl.ForeachStatus(func(k interface{}, v interface{}, dirty bool) {iter(k.(int32), v.(*Pack), dirty)})
-}
-func (this *ContainerPlayerDatapacks)ForeachDirty(iter ItemIterPlayerDatapacks) {
-    this._impl.ForeachDirty(func(k interface{}, v interface{}) {iter(k.(int32), v.(*Pack))})
-}
-func (this *ContainerPlayerDatapacks)Size() int {
-    return this._impl.Size()
-}
-func (this *ContainerPlayerDatapacks)Clear() {
-    this._impl.Clear()
-}
-
-func NewPlayerDatapacksProto(k int32, v *Pack) *netproto.PlayerDatapacks {
-        return &netproto.PlayerDatapacks{
-            Key:&k,
-            Val:v.ToProto(),
-        }
-}
-
-func NewPlayerDatapacksProtoDirty(k int32, v *Pack) *netproto.PlayerDatapacks {
-        return &netproto.PlayerDatapacks{
-            Key:&k,
-            Val:v.ToProtoDirty(),
-        }
-}
-            
-                
 type ItemIterTestListListPrimitiveInt func(k int32, v int32)
 type ItemStatusIterTestListListPrimitiveInt func(k int32, v int32, dirty bool)
     
@@ -100,7 +14,7 @@ type ContainerTestListListPrimitiveInt struct {
     _impl *datasync.DirtyContainerVector
 }
 func (this *ContainerTestListListPrimitiveInt)Get(key int32) int32 {
-    return this._impl.Get(key).(int32)
+        return this._impl.Get(key).(int32)
 }
 func (this *ContainerTestListListPrimitiveInt)Set(key int32, value int32) {
     this._impl.Set(key, value)
@@ -143,7 +57,7 @@ type ContainerTestListListPrimitiveStr struct {
     _impl *datasync.DirtyContainerVector
 }
 func (this *ContainerTestListListPrimitiveStr)Get(key int32) string {
-    return this._impl.Get(key).(string)
+        return this._impl.Get(key).(string)
 }
 func (this *ContainerTestListListPrimitiveStr)Set(key int32, value string) {
     this._impl.Set(key, value)
@@ -186,7 +100,12 @@ type ContainerTestListListPrimitiveCom struct {
     _impl *datasync.DirtyContainerVector
 }
 func (this *ContainerTestListListPrimitiveCom)Get(key int32) *PlayerData {
-    return this._impl.Get(key).(*PlayerData)
+        val := this._impl.Get(key)
+        if val == nil {
+            return nil
+        } else {
+            return val.(*PlayerData)
+        }
 }
 func (this *ContainerTestListListPrimitiveCom)Set(key int32, value *PlayerData) {
     this._impl.Set(key, value)
@@ -229,7 +148,7 @@ type ContainerTestMapMapPrimitiveIntInt struct {
     _impl *datasync.DirtyContainerMap
 }
 func (this *ContainerTestMapMapPrimitiveIntInt)Get(key int32) int32 {
-    return this._impl.Get(key).(int32)
+        return this._impl.Get(key).(int32)
 }
 func (this *ContainerTestMapMapPrimitiveIntInt)Set(key int32, value int32) {
     this._impl.Set(key, value)
@@ -272,7 +191,7 @@ type ContainerTestMapMapPrimitiveIntStr struct {
     _impl *datasync.DirtyContainerMap
 }
 func (this *ContainerTestMapMapPrimitiveIntStr)Get(key int32) string {
-    return this._impl.Get(key).(string)
+        return this._impl.Get(key).(string)
 }
 func (this *ContainerTestMapMapPrimitiveIntStr)Set(key int32, value string) {
     this._impl.Set(key, value)
@@ -315,7 +234,7 @@ type ContainerTestMapMapPrimitiveStrInt struct {
     _impl *datasync.DirtyContainerMap
 }
 func (this *ContainerTestMapMapPrimitiveStrInt)Get(key string) int32 {
-    return this._impl.Get(key).(int32)
+        return this._impl.Get(key).(int32)
 }
 func (this *ContainerTestMapMapPrimitiveStrInt)Set(key string, value int32) {
     this._impl.Set(key, value)
@@ -358,7 +277,7 @@ type ContainerTestMapMapPrimitiveStrStr struct {
     _impl *datasync.DirtyContainerMap
 }
 func (this *ContainerTestMapMapPrimitiveStrStr)Get(key string) string {
-    return this._impl.Get(key).(string)
+        return this._impl.Get(key).(string)
 }
 func (this *ContainerTestMapMapPrimitiveStrStr)Set(key string, value string) {
     this._impl.Set(key, value)
@@ -401,7 +320,12 @@ type ContainerTestMapMapPrimitiveIntCom struct {
     _impl *datasync.DirtyContainerMap
 }
 func (this *ContainerTestMapMapPrimitiveIntCom)Get(key int32) *BaseInfo {
-    return this._impl.Get(key).(*BaseInfo)
+        val := this._impl.Get(key)
+        if val == nil {
+            return nil
+        } else {
+            return val.(*BaseInfo)
+        }
 }
 func (this *ContainerTestMapMapPrimitiveIntCom)Set(key int32, value *BaseInfo) {
     this._impl.Set(key, value)
@@ -444,7 +368,12 @@ type ContainerTestMapMapPrimitiveStrCom struct {
     _impl *datasync.DirtyContainerMap
 }
 func (this *ContainerTestMapMapPrimitiveStrCom)Get(key string) *PlayerData {
-    return this._impl.Get(key).(*PlayerData)
+        val := this._impl.Get(key)
+        if val == nil {
+            return nil
+        } else {
+            return val.(*PlayerData)
+        }
 }
 func (this *ContainerTestMapMapPrimitiveStrCom)Set(key string, value *PlayerData) {
     this._impl.Set(key, value)
@@ -483,9 +412,6 @@ func NewTestMapMapPrimitiveStrComProtoDirty(k string, v *PlayerData) *netproto.T
     type PlayerData struct {
         *datasync.DirtyContainerMarkVector
                 _baseInfo *BaseInfo
-                _pets *ContainerPlayerDatapets
-                _daily *Daily
-                _packs *ContainerPlayerDatapacks
     }
     // ctor
     func NewPlayerData() *PlayerData {
@@ -494,33 +420,11 @@ func NewTestMapMapPrimitiveStrComProtoDirty(k string, v *PlayerData) *netproto.T
         }
                 ins._baseInfo = NewBaseInfo()
                 ins._baseInfo.Init(ins, 1)
-                ins._pets = &ContainerPlayerDatapets {
-                    _impl : datasync.NewDirtyContainerVector(),
-                }
-                ins._pets._impl.Init(ins, 2)
-                ins._daily = NewDaily()
-                ins._daily.Init(ins, 3)
-                ins._packs = &ContainerPlayerDatapacks {
-                    _impl : datasync.NewDirtyContainerVector(),
-                }
-                ins._packs._impl.Init(ins, 4)
         return ins
     }
 // BaseInfo getter and setter
             func (this *PlayerData)GetBaseInfo() *BaseInfo {
                 return this._baseInfo
-            }
-// Pets getter and setter
-            func (this *PlayerData)GetPets() *ContainerPlayerDatapets {
-                return this._pets
-            }
-// Daily getter and setter
-            func (this *PlayerData)GetDaily() *Daily {
-                return this._daily
-            }
-// Packs getter and setter
-            func (this *PlayerData)GetPacks() *ContainerPlayerDatapacks {
-                return this._packs
             }
 
 // read from proto    
@@ -529,35 +433,12 @@ func (this *PlayerData)FromProto(pdata *netproto.PlayerData) {
             if pdata.BaseInfo != nil {
                 this.GetBaseInfo().FromProto(pdata.BaseInfo)
             }
-        // Pets getter and setter   
-                for _,val := range pdata.Pets {
-                    ele := NewPet()
-                    ele.FromProto(val.Val)
-                    this._pets.Set(*val.Key, ele)
-                }
-        // Daily getter and setter 
-            if pdata.Daily != nil {
-                this.GetDaily().FromProto(pdata.Daily)
-            }
-        // Packs getter and setter   
-                for _,val := range pdata.Packs {
-                    ele := NewPack()
-                    ele.FromProto(val.Val)
-                    this._packs.Set(*val.Key, ele)
-                }
 }
 
 // write to proto    
 func (this *PlayerData)ToProto() *netproto.PlayerData {
     pdata := &netproto.PlayerData{}
         pdata.BaseInfo = this._baseInfo.ToProto()
-        this._pets.Foreach(func (k int32, v *Pet) {
-            pdata.Pets = append(pdata.Pets, NewPlayerDatapetsProto(k,v))
-        })
-        pdata.Daily = this._daily.ToProto()
-        this._packs.Foreach(func (k int32, v *Pack) {
-            pdata.Packs = append(pdata.Packs, NewPlayerDatapacksProto(k,v))
-        })
     return pdata
 }
 
@@ -569,19 +450,6 @@ func (this *PlayerData)ToProtoDirty() *netproto.PlayerData {
     pdata := &netproto.PlayerData{}
     if this.IsDirty(1) {
             pdata.BaseInfo = this._baseInfo.ToProtoDirty()
-    }
-    if this.IsDirty(2) {
-            this._pets.ForeachDirty(func (k int32, v *Pet) {
-                    pdata.Pets = append(pdata.Pets, NewPlayerDatapetsProtoDirty(k,v))
-                })
-    }
-    if this.IsDirty(3) {
-            pdata.Daily = this._daily.ToProtoDirty()
-    }
-    if this.IsDirty(4) {
-            this._packs.ForeachDirty(func (k int32, v *Pack) {
-                    pdata.Packs = append(pdata.Packs, NewPlayerDatapacksProtoDirty(k,v))
-                })
     }
     return pdata
 }
@@ -653,8 +521,10 @@ func (this *PlayerInfo)ToProtoDirty() *netproto.PlayerInfo {
                 _id int64
                 _name string
                 _level int32
-                _gold int32
                 _exp int32
+                _gold int32
+                _head int32
+                _diamond int32
     }
     // ctor
     func NewBaseInfo() *BaseInfo {
@@ -687,21 +557,37 @@ func (this *PlayerInfo)ToProtoDirty() *netproto.PlayerInfo {
                 this._level = val
                 this.MarkDirtyUp(3)
             }
-// Gold getter and setter
-            func (this *BaseInfo)GetGold() int32 {
-                return this._gold
-            }
-            func (this *BaseInfo)SetGold(val int32) {
-                this._gold = val
-                this.MarkDirtyUp(4)
-            }
 // Exp getter and setter
             func (this *BaseInfo)GetExp() int32 {
                 return this._exp
             }
             func (this *BaseInfo)SetExp(val int32) {
                 this._exp = val
+                this.MarkDirtyUp(4)
+            }
+// Gold getter and setter
+            func (this *BaseInfo)GetGold() int32 {
+                return this._gold
+            }
+            func (this *BaseInfo)SetGold(val int32) {
+                this._gold = val
                 this.MarkDirtyUp(5)
+            }
+// Head getter and setter
+            func (this *BaseInfo)GetHead() int32 {
+                return this._head
+            }
+            func (this *BaseInfo)SetHead(val int32) {
+                this._head = val
+                this.MarkDirtyUp(6)
+            }
+// Diamond getter and setter
+            func (this *BaseInfo)GetDiamond() int32 {
+                return this._diamond
+            }
+            func (this *BaseInfo)SetDiamond(val int32) {
+                this._diamond = val
+                this.MarkDirtyUp(7)
             }
 
 // read from proto    
@@ -718,13 +604,21 @@ func (this *BaseInfo)FromProto(pdata *netproto.BaseInfo) {
             if pdata.Level != nil {
                 this.SetLevel(*pdata.Level)
             }
+        // Exp getter and setter
+            if pdata.Exp != nil {
+                this.SetExp(*pdata.Exp)
+            }
         // Gold getter and setter
             if pdata.Gold != nil {
                 this.SetGold(*pdata.Gold)
             }
-        // Exp getter and setter
-            if pdata.Exp != nil {
-                this.SetExp(*pdata.Exp)
+        // Head getter and setter
+            if pdata.Head != nil {
+                this.SetHead(*pdata.Head)
+            }
+        // Diamond getter and setter
+            if pdata.Diamond != nil {
+                this.SetDiamond(*pdata.Diamond)
             }
 }
 
@@ -734,8 +628,10 @@ func (this *BaseInfo)ToProto() *netproto.BaseInfo {
         pdata.Id = proto.Int64(this._id)
         pdata.Name = proto.String(this._name)
         pdata.Level = proto.Int32(this._level)
-        pdata.Gold = proto.Int32(this._gold)
         pdata.Exp = proto.Int32(this._exp)
+        pdata.Gold = proto.Int32(this._gold)
+        pdata.Head = proto.Int32(this._head)
+        pdata.Diamond = proto.Int32(this._diamond)
     return pdata
 }
 
@@ -755,216 +651,16 @@ func (this *BaseInfo)ToProtoDirty() *netproto.BaseInfo {
             pdata.Level = proto.Int32(this._level)
     }
     if this.IsDirty(4) {
-            pdata.Gold = proto.Int32(this._gold)
-    }
-    if this.IsDirty(5) {
             pdata.Exp = proto.Int32(this._exp)
     }
-    return pdata
-}
-    type Pet struct {
-        *datasync.DirtyContainerMarkVector
-                _id int64
-                _level int32
-                _pack int32
+    if this.IsDirty(5) {
+            pdata.Gold = proto.Int32(this._gold)
     }
-    // ctor
-    func NewPet() *Pet {
-        ins := &Pet {
-            DirtyContainerMarkVector:datasync.NewDirtyContainerMarkVector(),
-        }
-        return ins
+    if this.IsDirty(6) {
+            pdata.Head = proto.Int32(this._head)
     }
-// Id getter and setter
-            func (this *Pet)GetId() int64 {
-                return this._id
-            }
-            func (this *Pet)SetId(val int64) {
-                this._id = val
-                this.MarkDirtyUp(1)
-            }
-// Level getter and setter
-            func (this *Pet)GetLevel() int32 {
-                return this._level
-            }
-            func (this *Pet)SetLevel(val int32) {
-                this._level = val
-                this.MarkDirtyUp(2)
-            }
-// Pack getter and setter
-            func (this *Pet)GetPack() int32 {
-                return this._pack
-            }
-            func (this *Pet)SetPack(val int32) {
-                this._pack = val
-                this.MarkDirtyUp(3)
-            }
-
-// read from proto    
-func (this *Pet)FromProto(pdata *netproto.Pet) {
-        // Id getter and setter
-            if pdata.Id != nil {
-                this.SetId(*pdata.Id)
-            }
-        // Level getter and setter
-            if pdata.Level != nil {
-                this.SetLevel(*pdata.Level)
-            }
-        // Pack getter and setter
-            if pdata.Pack != nil {
-                this.SetPack(*pdata.Pack)
-            }
-}
-
-// write to proto    
-func (this *Pet)ToProto() *netproto.Pet {
-    pdata := &netproto.Pet{}
-        pdata.Id = proto.Int64(this._id)
-        pdata.Level = proto.Int32(this._level)
-        pdata.Pack = proto.Int32(this._pack)
-    return pdata
-}
-
-// write dirty to proto
-func (this *Pet)ToProtoDirty() *netproto.Pet {
-    if (this.IsAllDirty()) {
-        return this.ToProto()
-    }
-    pdata := &netproto.Pet{}
-    if this.IsDirty(1) {
-            pdata.Id = proto.Int64(this._id)
-    }
-    if this.IsDirty(2) {
-            pdata.Level = proto.Int32(this._level)
-    }
-    if this.IsDirty(3) {
-            pdata.Pack = proto.Int32(this._pack)
-    }
-    return pdata
-}
-    type Pack struct {
-        *datasync.DirtyContainerMarkVector
-                _id int64
-                _num int64
-    }
-    // ctor
-    func NewPack() *Pack {
-        ins := &Pack {
-            DirtyContainerMarkVector:datasync.NewDirtyContainerMarkVector(),
-        }
-        return ins
-    }
-// Id getter and setter
-            func (this *Pack)GetId() int64 {
-                return this._id
-            }
-            func (this *Pack)SetId(val int64) {
-                this._id = val
-                this.MarkDirtyUp(1)
-            }
-// Num getter and setter
-            func (this *Pack)GetNum() int64 {
-                return this._num
-            }
-            func (this *Pack)SetNum(val int64) {
-                this._num = val
-                this.MarkDirtyUp(2)
-            }
-
-// read from proto    
-func (this *Pack)FromProto(pdata *netproto.Pack) {
-        // Id getter and setter
-            if pdata.Id != nil {
-                this.SetId(*pdata.Id)
-            }
-        // Num getter and setter
-            if pdata.Num != nil {
-                this.SetNum(*pdata.Num)
-            }
-}
-
-// write to proto    
-func (this *Pack)ToProto() *netproto.Pack {
-    pdata := &netproto.Pack{}
-        pdata.Id = proto.Int64(this._id)
-        pdata.Num = proto.Int64(this._num)
-    return pdata
-}
-
-// write dirty to proto
-func (this *Pack)ToProtoDirty() *netproto.Pack {
-    if (this.IsAllDirty()) {
-        return this.ToProto()
-    }
-    pdata := &netproto.Pack{}
-    if this.IsDirty(1) {
-            pdata.Id = proto.Int64(this._id)
-    }
-    if this.IsDirty(2) {
-            pdata.Num = proto.Int64(this._num)
-    }
-    return pdata
-}
-    type Daily struct {
-        *datasync.DirtyContainerMarkVector
-                _lastUpdateTime int64
-                _sign bool
-    }
-    // ctor
-    func NewDaily() *Daily {
-        ins := &Daily {
-            DirtyContainerMarkVector:datasync.NewDirtyContainerMarkVector(),
-        }
-        return ins
-    }
-// LastUpdateTime getter and setter
-            func (this *Daily)GetLastUpdateTime() int64 {
-                return this._lastUpdateTime
-            }
-            func (this *Daily)SetLastUpdateTime(val int64) {
-                this._lastUpdateTime = val
-                this.MarkDirtyUp(1)
-            }
-// Sign getter and setter
-            func (this *Daily)GetSign() bool {
-                return this._sign
-            }
-            func (this *Daily)SetSign(val bool) {
-                this._sign = val
-                this.MarkDirtyUp(2)
-            }
-
-// read from proto    
-func (this *Daily)FromProto(pdata *netproto.Daily) {
-        // LastUpdateTime getter and setter
-            if pdata.LastUpdateTime != nil {
-                this.SetLastUpdateTime(*pdata.LastUpdateTime)
-            }
-        // Sign getter and setter
-            if pdata.Sign != nil {
-                this.SetSign(*pdata.Sign)
-            }
-}
-
-// write to proto    
-func (this *Daily)ToProto() *netproto.Daily {
-    pdata := &netproto.Daily{}
-        pdata.LastUpdateTime = proto.Int64(this._lastUpdateTime)
-        pdata.Sign = proto.Bool(this._sign)
-    return pdata
-}
-
-// write dirty to proto
-func (this *Daily)ToProtoDirty() *netproto.Daily {
-    if (this.IsAllDirty()) {
-        return this.ToProto()
-    }
-    pdata := &netproto.Daily{}
-    if this.IsDirty(1) {
-            pdata.LastUpdateTime = proto.Int64(this._lastUpdateTime)
-    }
-    if this.IsDirty(2) {
-            pdata.Sign = proto.Bool(this._sign)
+    if this.IsDirty(7) {
+            pdata.Diamond = proto.Int32(this._diamond)
     }
     return pdata
 }

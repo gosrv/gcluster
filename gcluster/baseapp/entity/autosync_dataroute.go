@@ -13,8 +13,7 @@ import (
 在处理完玩家消息后主动触发一次增量数据更新
 */
 type AutoSyncDataRoute struct {
-	raw        gproto.IRoute
-	playerSync *PlayerDataSync
+	raw gproto.IRoute
 }
 
 func NewAutoSyncDataRoute() *AutoSyncDataRoute {
@@ -42,15 +41,10 @@ func (this *AutoSyncDataRoute) Trigger(from interface{}, key interface{}, value 
 	// 先处理消息
 	rep := this.raw.Trigger(from, key, value)
 	// 在ctx中查找玩家同步模块
-	if this.playerSync == nil {
-		psync := ctx.Get(reflect.TypeOf((*PlayerDataSync)(nil)))
-		if psync != nil {
-			this.playerSync = psync.(*PlayerDataSync)
-		}
-	}
+	psync := ctx.Get(PPlayerDataSyncType)
 	// 尝试增量更新同步
-	if this.playerSync != nil {
-		this.playerSync.TrySyncDirtyData(false)
+	if psync != nil {
+		psync.(*PlayerDataSync).TrySyncDirtyData(false)
 	}
 	// 日志记录
 	if gutil.IsNilValue(rep) {

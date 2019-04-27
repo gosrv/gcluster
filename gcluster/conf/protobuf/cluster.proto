@@ -9,14 +9,9 @@ message SS_Tick {
 
 }
 
-message SS_ClusterRegister {
-    string signCode = 1;
-    string uuid = 2;
-}
 message SS_KickPlayer {
     int64 playerId = 1;
 }
-
 // 玩家之间的消息
 message SS_Player2Player {
     int64 fromPlayerId = 1;
@@ -48,7 +43,6 @@ enum ECMsgIds {
     ESS_None = 0;
 
     ESS_Tick = 1;
-    ESS_ClusterRegister = 10;
     ESS_KickPlayer = 11;
     ESS_Player2Player = 12;
     ESS_P2PRedirect = 13;

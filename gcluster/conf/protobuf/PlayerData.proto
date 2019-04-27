@@ -4,18 +4,6 @@ package netproto;
     optional int32 key = 1;
     optional BaseInfo val  = 2;
 }
- message PlayerDatapets {
-    optional int32 key = 1;
-    optional Pet val  = 2;
-}
- message PlayerDatadaily {
-    optional int32 key = 1;
-    optional Daily val  = 2;
-}
- message PlayerDatapacks {
-    optional int32 key = 1;
-    optional Pack val  = 2;
-}
  message PlayerInfoserverTime {
     optional int32 key = 1;
     optional int64 val  = 2;
@@ -36,41 +24,21 @@ package netproto;
     optional int32 key = 1;
     optional int32 val  = 2;
 }
- message BaseInfogold {
-    optional int32 key = 1;
-    optional int32 val  = 2;
-}
  message BaseInfoexp {
     optional int32 key = 1;
     optional int32 val  = 2;
 }
- message Petid {
-    optional int32 key = 1;
-    optional int64 val  = 2;
-}
- message Petlevel {
+ message BaseInfogold {
     optional int32 key = 1;
     optional int32 val  = 2;
 }
- message Petpack {
+ message BaseInfohead {
     optional int32 key = 1;
     optional int32 val  = 2;
 }
- message Packid {
+ message BaseInfodiamond {
     optional int32 key = 1;
-    optional int64 val  = 2;
-}
- message Packnum {
-    optional int32 key = 1;
-    optional int64 val  = 2;
-}
- message DailylastUpdateTime {
-    optional int32 key = 1;
-    optional int64 val  = 2;
-}
- message Dailysign {
-    optional int32 key = 1;
-    optional bool val  = 2;
+    optional int32 val  = 2;
 }
  message TestListid {
     optional int32 key = 1;
@@ -118,9 +86,6 @@ message TestMapMapPrimitiveStrCom {
 }
 message PlayerData {
         optional BaseInfo baseInfo = 1;
-        repeated PlayerDatapets pets = 2;
-        optional Daily daily = 3;
-        repeated PlayerDatapacks packs = 4;
 }
 message PlayerInfo {
         optional int64 serverTime = 1;
@@ -130,21 +95,10 @@ message BaseInfo {
         optional int64 id = 1;
         optional string name = 2;
         optional int32 level = 3;
-        optional int32 gold = 4;
-        optional int32 exp = 5;
-}
-message Pet {
-        optional int64 id = 1;
-        optional int32 level = 2;
-        optional int32 pack = 3;
-}
-message Pack {
-        optional int64 id = 1;
-        optional int64 num = 2;
-}
-message Daily {
-        optional int64 lastUpdateTime = 1;
-        optional bool sign = 2;
+        optional int32 exp = 4;
+        optional int32 gold = 5;
+        optional int32 head = 6;
+        optional int32 diamond = 7;
 }
 message TestList {
         optional int64 id = 7;

@@ -1,5 +1,6 @@
 {
   "cfg.files": [
+    "gcluster/conf/cluster.json",
     "gcluster/conf/redis.json",
     "gcluster/conf/mongo.json",
     "gcluster/conf/leveldb.json",

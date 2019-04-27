@@ -7,6 +7,7 @@ import (
 	"github.com/gosrv/gbase/gnet"
 	"github.com/gosrv/gbase/gproto"
 	"github.com/gosrv/gcluster/gcluster/baseapp/entity"
+	"github.com/gosrv/gcluster/gcluster/common"
 	"github.com/gosrv/gcluster/gcluster/common/meta"
 	"github.com/gosrv/gcluster/gcluster/proto"
 	"github.com/gosrv/glog"
@@ -15,6 +16,7 @@ import (
 	"sort"
 	"strconv"
 	"sync"
+	"time"
 )
 
 const (
@@ -26,7 +28,7 @@ type PlayerMgr struct {
 	playerId2Channel sync.Map
 	log              glog.IFieldLogger `log:"app"`
 
-	messageQueueFactories   []gdb.IMessageQueueFactory     `bean:""`
+	messageQueueFactories   []gproto.IMessageQueueFactory     `bean:""`
 	attributeGroupFactories []gdb.IDBAttributeGroupFactory `bean:""`
 	dbAccessorFactory       *dbaccessor.DBDataAccessorFactory
 }
@@ -51,12 +53,21 @@ func (this *PlayerMgr) BeanUninit() {
 
 }
 
-func NewPlayerMgr() *PlayerMgr {
+func newPlayerMgr() *PlayerMgr {
 	return &PlayerMgr{}
 }
 
 func (this *PlayerMgr) IsForbidLogin(playerId int64) bool {
 	return false
+}
+
+func (this *PlayerMgr) KickPlayer(playerId int64) bool {
+	netChannelIns, _ := this.playerId2Channel.Load(playerId)
+	if netChannelIns == nil {
+		return false
+	}
+	_ = netChannelIns.(gproto.INetChannel).Close()
+	return true
 }
 
 func (this *PlayerMgr) GetDBDataAccessor(playerId int64) *dbaccessor.DBDataAccessor {
@@ -87,6 +98,10 @@ func (this *PlayerMgr) InitPlayerData(playerId int64, playerData *entity.PlayerD
 	baseInfo := playerData.GetBaseInfo()
 	baseInfo.SetId(playerId)
 	baseInfo.SetLevel(1)
+
+	playerData.GetHeroPack().SetLimit(100)
+	playerData.GetChapter().SetLevel(1)
+	playerData.GetChapter().SetPrizeCheckTime(time.Now().Unix())
 	baseInfo.SetName("name" + strconv.FormatInt(playerId, 10))
 }
 
@@ -105,6 +120,8 @@ func (this *PlayerMgr) PlayerLogin(playerId int64, netChannel gproto.INetChannel
 	// 加载玩家数据
 	playerData := this.LoadPlayerData(playerId, loader)
 	playerInfo := entity.NewPlayerInfo()
+	playerInfo.SetServerTime(time.Now().Unix())
+	playerInfo.SetServerName("gserver")
 	onlineData := entity.NewPlayerOnlineData()
 	// 数据同步
 	syncData := entity.NewPlayerDataSync(playerData, playerInfo,
@@ -118,7 +135,7 @@ func (this *PlayerMgr) PlayerLogin(playerId int64, netChannel gproto.INetChannel
 
 	ctx.SetAttribute(gnet.ScopeSession, reflect.TypeOf(dataAccessor), dataAccessor)
 	ctx.SetAttribute(gnet.ScopeSession, gdb.IDBAttributeGroupType, attributeGroup)
-	ctx.SetAttribute(gnet.ScopeSession, gdb.IMessageQueueType,
+	ctx.SetAttribute(gnet.ScopeSession, gproto.IMessageQueueType,
 		this.dbAccessorFactory.GetMessageQueue(meta.PlayerAttribute, strconv.FormatInt(playerId, 10)))
 
 	return true
@@ -134,4 +151,8 @@ func (this *PlayerMgr) GetNetchannelByPlayerId(playerId int64) gproto.INetChanne
 		return nil
 	}
 	return net.(gproto.INetChannel)
+}
+
+func init() {
+	common.BeansInit = append(common.BeansInit, newPlayerMgr())
 }

@@ -9,12 +9,13 @@ import (
 	"github.com/gosrv/gbase/ghttp"
 	"github.com/gosrv/gbase/gl"
 	"github.com/gosrv/gbase/gmxdriver"
-	"github.com/gosrv/gbase/route"
 	"github.com/gosrv/gbase/tcpnet"
-	"github.com/gosrv/gcluster/gcluster/baseapp/controller"
+	_ "github.com/gosrv/gcluster/gcluster/baseapp/controller"
 	"github.com/gosrv/gcluster/gcluster/baseapp/entity"
-	"github.com/gosrv/gcluster/gcluster/baseapp/service"
+	_ "github.com/gosrv/gcluster/gcluster/baseapp/service"
 	"github.com/gosrv/gcluster/gcluster/common"
+	entity2 "github.com/gosrv/gcluster/gcluster/common/entity"
+	"github.com/gosrv/gcluster/gcluster/common/meta"
 	"github.com/gosrv/glog"
 	"github.com/gosrv/goioc"
 	"github.com/gosrv/goioc/util"
@@ -32,19 +33,15 @@ func initBaseNet(builder gioc.IBeanContainerBuilder) {
 	builder.AddBean(net)
 }
 
-func initClusterMsgCenter(builder gioc.IBeanContainerBuilder) {
+func initCluster(builder gioc.IBeanContainerBuilder, app *app.Application) {
 	idtype := common.ClusterMsgIds
-	encoder := codec.NewIdProtobufEncoder(idtype)
-	decoder := codec.NewIdProtobufDecoder(idtype)
-	builder.AddBean(common.NewClusterMsgCenter(encoder, decoder))
+	encoder := codec.NewNetMsgFixLenProtobufEncoder(idtype)
+	decoder := codec.NewNetMsgFixLenProtobufDecoder(idtype)
+	app.InitClusterMqBuilder(builder, "cluster", cluster.NodeMQName, encoder, decoder, nil, nil)
+	builder.AddBean(common.NewPlayerBaseappInfo(meta.PlayerAttribute + ":", 0, 0))
 }
 
 func initServices(builder gioc.IBeanContainerBuilder) {
-	redisNodeMgr := cluster.NewRedisNodeMgr()
-	encoder := codec.NewIdProtobufEncoder(common.ClusterMsgIds)
-	decoder := codec.NewIdProtobufDecoder(common.ClusterMsgIds)
-	redisNodeMq := cluster.NewRedisNodeMQ(redisNodeMgr, encoder, decoder, route.NewRouteMap(true, false))
-
 	builder.AddBean(
 		// redis 自动配置
 		gredis.NewAutoConfigReids("pcluster.redis", ""),
@@ -53,23 +50,20 @@ func initServices(builder gioc.IBeanContainerBuilder) {
 		ghttp.NewHttpServer("pcluster.http", nil),
 		gmxdriver.NewGMXDriver("/gmx"),
 		common.NewGmxAppStats(),
-		redisNodeMgr,
-		redisNodeMq,
-		cluster.NewNodeMgr(redisNodeMgr),
-		cluster.NewNodeMQ(redisNodeMq),
-		controller.NewControllerLogin(),
-		controller.NewControllerLogic(),
-		service.NewPlayerMgr(),
-		service.NewServiceDataAutoSync(),
-		service.NewServiceLogic(),
-		service.NewServiceLogin(),
-		service.NewServicePlayerMsgQueue(),
 	)
+
+	idtype := common.ClusterMsgIds
+	encoder := codec.NewIdProtobufEncoder(idtype)
+	decoder := codec.NewIdProtobufDecoder(idtype)
+	builder.AddBean(entity2.NewPlayerMQBundle(encoder, decoder))
+
+	builder.AddBean(common.BeansInit...)
 }
 
 func initLog(configLoader gioc.IConfigLoader, builder gioc.IBeanContainerBuilder) {
 	logroot := &glog.ConfigLogRoot{}
-	configLoader.Config().Get("pcluster.log").Scan(logroot)
+	err := configLoader.Config().Get("pcluster.log").Scan(logroot)
+	util.VerifyNoError(err)
 
 	logBuilder := glog.NewLogFactoryBuilder()
 	logFactory, err := logBuilder.Build(logroot)
@@ -89,11 +83,10 @@ func main() {
 	initLog(configLoader, builder)
 
 	application.InitBaseBeanBuilder(builder, configLoader)
+	initCluster(builder, application)
 
 	initServices(builder)
 	initBaseNet(builder)
-	initClusterMsgCenter(builder)
 	beanContainer := application.Build(builder)
-
 	application.Start(beanContainer)
 }
